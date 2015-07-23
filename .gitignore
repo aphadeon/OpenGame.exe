@@ -2,9 +2,9 @@
 *.suo
 *.user
 *.sln.docstates
+*.userprefs
 
 # Build results
-
 [Dd]ebug/
 [Rr]elease/
 x64/

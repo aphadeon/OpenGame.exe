@@ -12,9 +12,8 @@ namespace OpenGame
     {
         static void Main(string[] args)
         {
-            //Setup DLL resolution
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-            currentDomain.AssemblyResolve += new ResolveEventHandler(ResolveDLL);
+            //Setup DLL resolution (so that it can see DLLs in the /System/ directory)
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveDLL);
         }
 
         static Assembly ResolveDLL(object sender, ResolveEventArgs args)
