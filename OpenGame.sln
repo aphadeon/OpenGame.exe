@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGame.exe", "OpenGame.exe.csproj", "{13A28048-DAF4-4478-8CBB-C4E4B87E8957}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
