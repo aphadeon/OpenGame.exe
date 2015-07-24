@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenGame
 {
-    public class RTP
+    class RTP
     {
         private string Path = "";
 

@@ -35,7 +35,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>OpenGame.Program</StartupObject>
+    <StartupObject>OpenGame.Launcher</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>OpenGame.ico</ApplicationIcon>
@@ -72,8 +72,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Launcher.cs" />
     <Compile Include="src\CommandLineSwitches.cs" />
     <Compile Include="src\ConsoleWindow.cs" />
+    <Compile Include="src\Drawable.cs" />
+    <Compile Include="src\Lib.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -81,7 +84,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="src\RGSS\Bitmap.cs" />
+    <Compile Include="src\RGSS\Color.cs" />
+    <Compile Include="src\RGSS\Font.cs" />
+    <Compile Include="src\RGSS\Graphics.cs" />
+    <Compile Include="src\RGSS\Rect.cs" />
+    <Compile Include="src\RGSS\Sprite.cs" />
+    <Compile Include="src\RGSS\Tilemap.cs" />
+    <Compile Include="src\RGSS\Tone.cs" />
+    <Compile Include="src\RGSS\Viewport.cs" />
+    <Compile Include="src\RGSS\Window.cs" />
     <Compile Include="src\RTP.cs" />
+    <Compile Include="src\Ruby.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -90,8 +104,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Loader.rb" />
     <None Include="OpenGame.ico" />
+    <None Include="RPG3.rb" />
+    <None Include="System.rb" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set msbuildbinpath="$(MSBuildBinPath)"

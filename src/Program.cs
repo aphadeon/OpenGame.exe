@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,7 +19,15 @@ namespace OpenGame
         //A helper class to track down those pesky RPG Maker RTPs.
         private static RTP Rtp;
 
+        //An int to track the RGSS Version- will be set to 1, 2, or 3.
         private static int RGSSVersion;
+
+        private static Ruby Ruby;
+
+        public static GameWindow Window;
+
+        public static int ResolutionWidth;
+        public static int ResolutionHeight;
 
         //A special pseudo-variable that reliably gets the executable's file location
         public static string AssemblyDirectory
@@ -39,18 +49,83 @@ namespace OpenGame
                 ConsoleWindow.Show();
             #endif
 
-            //Setup DLL resolution (so that it can see DLLs in the /System/ directory)
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveDLL);
-
-            //Read which version of RGSS we are aiming to emulate
-            ReadRGSSVersion();
-
             //Store the command-line switches
             Switches = new CommandLineSwitches(args);
 
+            //Read which version of RGSS we are aiming to emulate
+            //or observe the forced version commandline switch
+            if (Switches.GetForcedRGSSVersion() > 0)
+            {
+                RGSSVersion = Switches.GetForcedRGSSVersion();
+            }
+            else
+            {
+                ReadRGSSVersion();
+            }
+            
             //Setup the RTP
             Rtp = new RTP(AssemblyDirectory);
+
+            //Create the Ruby instance
+            Ruby = new Ruby();
+
+            if(RGSSVersion == 1){
+                ResolutionWidth = 640;
+                ResolutionHeight = 480;
+            } else {
+                ResolutionWidth = 544;
+                ResolutionHeight = 416;
+            }
+
+            Window = new GameWindow(ResolutionWidth, ResolutionHeight);
+
+            Window.Icon = Properties.Resources.OpenGame;
+
+            Window.Resize += (sender, e) => { OnResize(sender, e); };
+
+            Window.Closed += (sender, e) => { OnClose(sender, e); };
+
+            Window.Visible = true;
+            OnLoad();
+
+            //Start the game
+            Ruby.Start();
+
+            //Clean up the Ruby instance
+            Ruby.Dispose();
         }
+
+        private static void OnClose(object sender, EventArgs e)
+        {
+            Exit();
+        }
+
+        public static void OnLoad()
+        {
+            Window.VSync = VSyncMode.On;
+            Window.Title = "OpenGame.exe"; //TODO: load title from ini
+
+            //setup opengl
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, ResolutionWidth, ResolutionHeight, 0, -1, 1);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.Disable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.ClearColor(0f, 0f, 0f, 1.0f);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            Window.SwapBuffers();
+        }
+
+        public static void OnResize(object sender, EventArgs e)
+        {
+            GL.Viewport(0, 0, Window.Width, Window.Height);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, ResolutionWidth, ResolutionHeight, 0, -1, 1);
+        }
+
 
         //An accessor method for the RTP instance
         public static RTP GetRtp()
@@ -106,18 +181,20 @@ namespace OpenGame
         {
             Console.WriteLine("[ERROR] " + message);
             MessageBox.Show("Error: " + message);
-            Environment.Exit(-1);
+            Exit(-1);
         }
 
-        //This is used to load assemblies manually, so that we can keep our output directory
-        //clean by stashing the DLLs in /System/, akin to vanilla RGSS DLL location.
-        public static Assembly ResolveDLL(object sender, ResolveEventArgs args)
+        //Shorthand exit function without a status code
+        public static void Exit()
         {
-            string folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string assemblyPath = Path.Combine(folderPath + @"\System\", new AssemblyName(args.Name).Name + ".dll");
-            if (File.Exists(assemblyPath) == false) return null;
-            Assembly assembly = Assembly.LoadFrom(assemblyPath);
-            return assembly;
+            Exit(0);
+        }
+
+        //Program safe exit handler
+        public static void Exit(int code)
+        {
+            if (Window != null) Window.Exit();
+            Environment.Exit(code);
         }
     }
 }

@@ -5,11 +5,12 @@ using System.Text;
 
 namespace OpenGame
 {
-    public class CommandLineSwitches
+    class CommandLineSwitches
     {
-        public bool EnableConsole = false;
-        public bool PlayTest = false;
-        public bool BattleTest = false;
+        private bool EnableConsole = false;
+        private bool PlayTest = false;
+        private bool BattleTest = false;
+        private int ForcedRgss = 0;
 
         public CommandLineSwitches(string[] args)
         {
@@ -18,8 +19,16 @@ namespace OpenGame
                 if (arg == "console") EnableConsole = true;
                 if (arg == "test") PlayTest = true;
                 if (arg == "btest") BattleTest = true;
+                if (arg == "rgss1") ForcedRgss = 1;
+                if (arg == "rgss2") ForcedRgss = 2;
+                if (arg == "rgss3") ForcedRgss = 3;
             }
             if (EnableConsole) ConsoleWindow.Show();
+        }
+
+        public int GetForcedRGSSVersion()
+        {
+            return ForcedRgss;
         }
     }
 }
