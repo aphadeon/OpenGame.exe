@@ -1,4 +1,4 @@
-# OpenGame.exe
+# ![logo](Tools/logo.png) OpenGame.exe
 A custom Ruby-powered game engine that supports RPG Maker games.  It aims to emulate the original 
 RPG Maker functionality as closely as possible, and to later be expanded to provide new functions 
 to empower RPG Maker games.
@@ -44,9 +44,6 @@ The first is MP3 support.  This is due to the fact that there are licensing issu
 the distribution and playback of MP3s, and it does not offer any significant benefit over the
 OGG/Vorbis file format. Don't believe me? [See this link for MP3 licensing details.](http://mp3licensing.com/royalty/software.html)
 [There *are* patents involved](http://mp3licensing.com/patents/index.html).
-On Windows machines, one could attempt to use a Windows DLL to decode the audio, leaving licensing 
-in their hands- but given that the target of this project is cross-platform compatibility, this 
-would create disparity between operating systems.
 
 Secondly, encrypted RPG Maker archives will not be supported.  While the format is well known 
 at this point, Enterbrain (the copyright holder for RPG Maker) has directly expressed that it is 
@@ -57,37 +54,16 @@ your game assets.
 
 Building Process
 ----------------
-Mono compatibility is a priority, but had to be broken temporarily while I port my unorganized 
-clustermess into this neat and tidy (by comparison) repository for you all.  So for the time 
-being, only Visual Studios on a Windows platform is supported. Expect this to change in the 
-not-too-distant future.
+We also use NuGet to manage dependencies- as long as you have package resolution enabled, 
+this process should run automatically and install the required libraries.
 
+A pre-build step exists, which invokes *Tools/build-deps.bat*, which copies the libraries to
+their expected location in the Debug and Release binary output folders.
 
-First you will have to clone the repository - recent versions of Git will take care of cloning
-the submodules for you.  Older versions will have to manually use the git command to initialize
-submodules and clone them, like so:
+Basically, clone and build in Visual Studio should be all there is to it.  Mono/Xamarin Studio
+(using xbuild) support is a high priority, but will not work correctly until further development.
 
-*git submodule init*
-
-*git submodule update*
-
-
-We also use NuGet to manage our OpenTK dependency- as long as you have package resolution enabled, 
-this process should run automatically and install the OpenTK library.
-
-Once you have the repository cloned and the submodules initialized, open OpenGame.exe.sln, select 
-a configuration (Debug or Release), and build.  I have a pre-build step which makes use of a 
-special batch file (the batch file is located under /Tools/ if you want to peek under the hood) 
-to build the dependency libraries and copy their binaries to a more suitable location.  This does 
-check if they already exist, so should you feel the need to rebuild those, just delete /lib/bin/.
-
-After building the dependencies, it should continue to build the executable itself, and copy the
-dependent DLLs to the binary directory, and you should be all set.
-
-For the intrepid who refuse to believe that Mono support is not ready yet, please be aware that 
-when switching between Visual Studio and Mono, you need to delete /obj/ to avoid a weird .NET bug.
-
-After building, you may drop an RPG Maker project directly in the /bin/{Release|Debug} folder for
+After building, you may drop an RPG Maker project directly in the output folder for
 simple testing, or copy the output files to your RPG Maker Project directory and run it from there.
 
 
