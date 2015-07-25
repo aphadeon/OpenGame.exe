@@ -49,6 +49,8 @@ namespace OpenGame
                 ConsoleWindow.Show();
             #endif
 
+            Console.WriteLine("Assembly Directory: " + AssemblyDirectory);
+
             //Store the command-line switches
             Switches = new CommandLineSwitches(args);
 

@@ -16,6 +16,11 @@ namespace OpenGame
             {
                 string key = @"HKEY_LOCAL_MACHINE\Software\Enterbrain\RGSS\RTP";
                 string rtp = (string)Microsoft.Win32.Registry.GetValue(key, "Standard", DefaultLocation);
+                if (String.IsNullOrWhiteSpace(rtp))
+                {
+                    key = @"HKEY_LOCAL_MACHINE\Software\Wow6432Node\Enterbrain\RGSS\RTP";
+                    rtp = (string)Microsoft.Win32.Registry.GetValue(key, "Standard", DefaultLocation);
+                }
                 rtp += @"\";
                 Path = rtp;
             }
@@ -23,6 +28,11 @@ namespace OpenGame
             {
                 string key = @"HKEY_LOCAL_MACHINE\Software\Enterbrain\RGSS2\RTP";
                 string rtp = (string)Microsoft.Win32.Registry.GetValue(key, "RPGVX", DefaultLocation);
+                if (String.IsNullOrWhiteSpace(rtp))
+                {
+                    key = @"HKEY_LOCAL_MACHINE\Software\Wow6432Node\Enterbrain\RGSS2\RTP";
+                    rtp = (string)Microsoft.Win32.Registry.GetValue(key, "RPGVX", DefaultLocation);
+                }
                 rtp += @"\";
                 Path = rtp;
             }
@@ -30,8 +40,17 @@ namespace OpenGame
             {
                 string key = @"HKEY_LOCAL_MACHINE\Software\Enterbrain\rgss3\rtp";
                 string rtp = (string)Microsoft.Win32.Registry.GetValue(key, "rpgvxace", DefaultLocation);
+                if (String.IsNullOrWhiteSpace(rtp))
+                {
+                    key = @"HKEY_LOCAL_MACHINE\Software\Wow6432Node\Enterbrain\rgss3\rtp";
+                    rtp = (string)Microsoft.Win32.Registry.GetValue(key, "rpgvxace", DefaultLocation);
+                }
                 rtp += @"\";
                 Path = rtp;
+            }
+            else
+            {
+                Path = DefaultLocation;
             }
         }
 

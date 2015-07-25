@@ -1,7 +1,7 @@
 # ![logo](Tools/logo.png) OpenGame.exe
 A custom Ruby-powered game engine that supports RPG Maker games.  It aims to emulate the original 
-RPG Maker functionality as closely as possible, and to later be expanded to provide new functions 
-to empower RPG Maker games.
+RPG Maker's *Game.exe* functionality as closely as possible, and to later be expanded to provide 
+new functions to empower RPG Maker games.
 
 **OpenGame.exe is currently in an Alpha phase - expect significant issues for the time being. I 
 am working as quickly as I can to get things ready for production use, but it takes time.**
@@ -42,7 +42,8 @@ deliberate reasons.
 
 The first is MP3 support.  This is due to the fact that there are licensing issues surrounding
 the distribution and playback of MP3s, and it does not offer any significant benefit over the
-OGG/Vorbis file format. Don't believe me? [See this link for MP3 licensing details.](http://mp3licensing.com/royalty/software.html)
+OGG/Vorbis file format. Don't believe me? 
+[See this link for MP3 licensing details.](http://mp3licensing.com/royalty/software.html)
 [There *are* patents involved](http://mp3licensing.com/patents/index.html).
 
 Secondly, encrypted RPG Maker archives will not be supported.  While the format is well known 
@@ -52,8 +53,8 @@ into an alternative, external encryption method, as I do understand the signific
 your game assets.
 
 
-Building Process
-----------------
+Building from source
+--------------------
 We also use NuGet to manage dependencies- as long as you have package resolution enabled, 
 this process should run automatically and install the required libraries.
 
