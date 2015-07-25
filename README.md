@@ -60,7 +60,7 @@ when switching between Visual Studio and Mono, you need to delete /obj/ to avoid
 
 Contributing
 ------------
-Please see the [Contribution Guidelines](CONTRIBUTING.md).
+Please see the [Contribution Guidelines](CONTRIBUTING.MD).
 
 
 Credits and Thanks
