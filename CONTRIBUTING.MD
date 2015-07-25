@@ -7,7 +7,7 @@ that you agree to license your contributions under the
 
 Please edit this file and add your name, username, or both below the Contributors header to 
 indicate that you have read this document and agree to its terms.  Pull requests from users that 
-have not signed this file cannot be accepted.
+have not signed this file cannot be accepted. You may include your email address if desired.
 
 ## Contributors
 

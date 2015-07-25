@@ -69,7 +69,7 @@ simple testing, or copy the output files to your RPG Maker Project directory and
 
 Contributing
 ------------
-Please see the [Contribution Guidelines](CONTRIBUTING.MD).
+Please see the [Contribution Guidelines](CONTRIBUTING.MD). :eyes:
 
 
 Credits and Thanks
