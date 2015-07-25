@@ -1,6 +1,3 @@
-[submodule "lib/OpenTK"]
-	path = lib/OpenTK
-	url = https://github.com/opentk/opentk
 [submodule "lib/IronLanguages"]
 	path = lib/IronLanguages
 	url = https://github.com/IronLanguages/main
