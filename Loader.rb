@@ -1,6 +1,10 @@
-﻿class RGSSReset < Exception
+﻿def rgss_main
+	begin
+		yield
+	rescue RGSSReset
+		retry
+	end
 end
-
 module Audio
   class <<self
     def setup_mdi
@@ -214,14 +218,9 @@ class Table
   end
 
 end
-
-def rgss_main
-	begin
-		yield
-	rescue RGSSReset
-		retry
-	end
+class RGSSReset < Exception
 end
+
 
 module Kernel
 	def load_data(filename)

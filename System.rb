@@ -9,7 +9,8 @@ load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
 
 unless defined? Fiber
  
-  class FiberError < StandardError; end
+  class FiberError < StandardError
+  end
  
   class Fiber
     def initialize

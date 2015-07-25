@@ -31,14 +31,24 @@ namespace OpenGame
             scope = engine.CreateScope();
 
             //Load system internals and our Ruby internals
-            Eval(System.Text.Encoding.Default.GetString(Properties.Resources.System));
-            Eval(System.Text.Encoding.Default.GetString(Properties.Resources.Loader));
+            Console.WriteLine("Loading system");
+            //engine.Execute(System.Text.Encoding.UTF8.GetString(Properties.Resources.System), scope);
+            string script = System.Text.Encoding.UTF8.GetString(Properties.Resources.System);
+            script = script.Substring(1);  //fix for a weird character that shouldn't be there o.O
+            Eval(script);
+            Console.WriteLine("Loading loader");
+            script = System.Text.Encoding.UTF8.GetString(Properties.Resources.Loader);
+            script = script.Substring(1); //fix for weird initial character
+            Eval(script);
+            Console.WriteLine("Loader loaded");
 
             //Load the version appropriate RPG datatypes
             //TODO: Add other RPG datatype versions
             if (Program.GetRGSSVersion() == 3)
             {
-                Eval(System.Text.Encoding.Default.GetString(Properties.Resources.RPG3));
+                script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG3);
+                script = script.Substring(1);
+                Eval(script);
             }
         }
 
@@ -55,7 +65,7 @@ namespace OpenGame
             engine.Execute(Bitmap.ruby_helper(), scope);
             Font.load_fonts();
             engine.Execute(Font.ruby_helper(), scope);
-            Eval(@"rgss_start");
+            engine.Execute(@"rgss_start", scope);
         }
 
         public void Eval(string str)
