@@ -2,6 +2,7 @@
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Zlib'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
+require 'OpenGame.exe'
 
 # API compatible Thread based Fiber implementation for Ruby 1.8
 # https://gist.github.com/tmm1/4631
