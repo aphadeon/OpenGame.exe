@@ -45,7 +45,7 @@ public class Color
         red = r; green = g; blue = b; alpha = a;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Color

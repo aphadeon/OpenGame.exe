@@ -182,7 +182,7 @@ namespace OpenGame
         public static void Error(string message)
         {
             Console.WriteLine("[ERROR] " + message);
-            MessageBox.Show("Error: " + message);
+            MessageBox.Show(message);
             Exit(-1);
         }
 

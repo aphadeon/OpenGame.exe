@@ -1,5 +1,4 @@
-﻿using OpenGame;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using RGSS;
 using System;
 using System.Collections.Generic;
@@ -23,8 +22,8 @@ public class Graphics
 
     public static void initialize()
     {
-        width = Program.ResolutionWidth;
-        height = Program.ResolutionHeight;
+        width = (int)Utils.Resolution.X;
+        height = (int)Utils.Resolution.Y;
         last_frame_time = DateTime.Now;
         frame_time = new TimeSpan(0, 0, 0, 0, 1000 / frame_rate);
         default_viewport = new Viewport(0, 0, width, height);
@@ -46,7 +45,7 @@ public class Graphics
         }
         Graphics.last_frame_time = DateTime.Now;
 
-        if (!Program.Window.IsExiting) Program.Window.ProcessEvents();
+        if (!Utils.Window_.IsExiting) Utils.Window_.ProcessEvents();
 
         frame_count++;
         if (frozen) return;
@@ -90,7 +89,7 @@ public class Graphics
             GL.End();
         }
 
-        if (!Program.Window.IsExiting) Program.Window.SwapBuffers();
+        if (!Utils.Window_.IsExiting) Utils.Window_.SwapBuffers();
     }
 
     public static void wait(int duration_frames)
@@ -106,18 +105,18 @@ public class Graphics
     public static void resize_screen(int w, int h)
     {
         width = w; height = h;
-        Program.ResolutionWidth = w;
-        Program.ResolutionHeight = h;
-        int x = Program.Window.ClientRectangle.Top;
-        int y = Program.Window.ClientRectangle.Left;
-        Program.Window.Width = width;
-        Program.Window.Height = height;
-        Program.Window.X = x;
-        Program.Window.Y = y;
-        GL.Viewport(0, 0, Program.Window.Width, Program.Window.Height);
+        Utils.Resolution.X = w;
+        Utils.Resolution.Y = h;
+        int x = Utils.Window_.ClientRectangle.Top;
+        int y = Utils.Window_.ClientRectangle.Left;
+        Utils.Window_.Width = width;
+        Utils.Window_.Height = height;
+        Utils.Window_.X = x;
+        Utils.Window_.Y = y;
+        GL.Viewport(0, 0, Utils.Window_.Width, Utils.Window_.Height);
         GL.MatrixMode(MatrixMode.Projection);
         GL.LoadIdentity();
-        GL.Ortho(0, Program.ResolutionWidth, Program.ResolutionHeight, 0, -1, 1);
+        GL.Ortho(0, Utils.Resolution.X, Utils.Resolution.Y, 0, -1, 1);
     }
 
     public static void frame_reset()

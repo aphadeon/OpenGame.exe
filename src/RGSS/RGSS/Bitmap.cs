@@ -1,5 +1,4 @@
-﻿using OpenGame;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using RGSS;
 using System;
 using System.Collections.Generic;
@@ -111,14 +110,14 @@ public class Bitmap
         }
         else
         {
-            file = Program.GetRtp().GetPath() + file;
+            file = Utils.RtpPath + file;
             if (File.Exists(file))
             {
                 return file;
             }
             else
             {
-                Program.Error("Failed to load texture: " + filename);
+                Utils.Error("Failed to load texture: " + filename);
                 return "";
             }
         }
@@ -393,7 +392,7 @@ public class Bitmap
         return disposed;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Bitmap

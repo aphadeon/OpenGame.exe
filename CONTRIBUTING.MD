@@ -1,4 +1,6 @@
 # Contribution Guidelines
+Please test your contributions before submitting a pull request, to be sure they are in working 
+order.
 
 ## License
 By contributing to OpenGame.exe, you agree that your contribution is your own original work, and 

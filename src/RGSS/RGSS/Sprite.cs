@@ -130,7 +130,7 @@ public class Sprite : Drawable
         return src_rect.height;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Sprite

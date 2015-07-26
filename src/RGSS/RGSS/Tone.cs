@@ -50,7 +50,7 @@ public class Tone
         return new Color(red, green, blue, gray);
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Tone

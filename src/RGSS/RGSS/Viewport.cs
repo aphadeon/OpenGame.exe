@@ -162,7 +162,7 @@ public class Viewport
         return disposed;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Viewport

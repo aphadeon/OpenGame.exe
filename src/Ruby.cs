@@ -65,7 +65,14 @@ namespace OpenGame
             engine.Execute(Bitmap.ruby_helper(), scope);
             Font.load_fonts();
             engine.Execute(Font.ruby_helper(), scope);
-            engine.Execute(@"rgss_start", scope);
+            try
+            {
+                engine.Execute(@"rgss_start", scope);
+            }
+            catch (Exception e)
+            {
+                Program.Error(e.Message);
+            }
         }
 
         public void Eval(string str)

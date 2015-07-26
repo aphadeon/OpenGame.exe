@@ -2,7 +2,6 @@
 using IronRuby.Builtins;
 using IronRuby.Runtime;
 using Microsoft.Scripting.Hosting;
-using OpenGame;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
@@ -18,6 +17,64 @@ using System.Windows.Forms;
 
 namespace RGSS
 {
+    public class Utils
+    {
+        public static int Version;
+        public static string RtpPath;
+        public static OpenTK.Vector2 Resolution;
+        public static OpenTK.GameWindow Window_;
+        private static ScriptEngine Engine;
+        private static ScriptScope Scope;
+
+        public static void SetWindow(OpenTK.GameWindow window, ScriptEngine engine, ScriptScope scope)
+        {
+            Window_ = window;
+            Graphics.initialize();
+            engine.Execute(Window.ruby_helper(), scope);
+            engine.Execute(CTilemap.ruby_helper(), scope);
+            engine.Execute(Viewport.ruby_helper(), scope);
+            engine.Execute(Rect.ruby_helper(), scope);
+            engine.Execute(Sprite.ruby_helper(), scope);
+            engine.Execute(Color.ruby_helper(), scope);
+            engine.Execute(Tone.ruby_helper(), scope);
+            engine.Execute(Bitmap.ruby_helper(), scope);
+            Font.load_fonts();
+            engine.Execute(Font.ruby_helper(), scope);
+            //Texture.LoadFonts();
+            Engine = engine;
+            Scope = scope;
+        }
+
+        public static void ExecuteRubyString(string ruby)
+        {
+            Engine.Execute(ruby, Scope);
+        }
+
+        public static void SetResolution(OpenTK.Vector2 resolution)
+        {
+            Resolution = resolution;
+        }
+
+        public static void SetRtpPath(string path)
+        {
+            RtpPath = path;
+        }
+
+        public static void SetVersion(int version)
+        {
+            Version = version;
+        }
+
+        public static void Dialog(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        public static void Error(string message)
+        {
+            MessageBox.Show(message);
+        }
+    }
     public class Input
     {
         private static Dictionary<int, bool> KeyStates = new Dictionary<int, bool>();
@@ -25,10 +82,10 @@ namespace RGSS
 
         public static void update()
         {
-            if(!Program.Window.IsExiting) Program.Window.ProcessEvents();
+            if(!Utils.Window_.IsExiting) Utils.Window_.ProcessEvents();
             LastKeyStates = new Dictionary<int, bool>(KeyStates);
 
-            KeyboardDevice kb = Program.Window.Keyboard;
+            KeyboardDevice kb = Utils.Window_.Keyboard;
             KeyStates[0] = (kb[OpenTK.Input.Key.S] || kb[OpenTK.Input.Key.Down]); //key 0, down
             KeyStates[1] = (kb[OpenTK.Input.Key.A] || kb[OpenTK.Input.Key.Left]); //key 1, left
             KeyStates[2] = (kb[OpenTK.Input.Key.D] || kb[OpenTK.Input.Key.Right]); //key 2, right

@@ -47,7 +47,7 @@ public class Rect
         height = 0;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Rect

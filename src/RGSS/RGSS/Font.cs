@@ -1,5 +1,4 @@
-﻿using OpenGame;
-using RGSS;
+﻿using RGSS;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,13 +19,13 @@ public class Font
     public static Color default_out_color = new Color(0, 0, 0, 255);
     internal System.Drawing.Font internal_font;
 
-    internal static void load_fonts()
+    public static void load_fonts()
     {
         private_fonts = new System.Drawing.Text.PrivateFontCollection();
 
         List<string> list = new List<string>();
         if (Directory.Exists(@"Fonts\")) list.AddRange(Directory.GetFiles(@"Fonts\"));
-        list.AddRange(Directory.GetFiles(Program.GetRtp().GetPath() + @"Fonts\"));
+        list.AddRange(Directory.GetFiles(Utils.RtpPath + @"Fonts\"));
         string[] found = list.ToArray();
         int id = 0;
         foreach (string file in found)
@@ -128,7 +127,7 @@ public class Font
         return false;
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
             class Font

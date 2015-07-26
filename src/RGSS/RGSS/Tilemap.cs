@@ -1,5 +1,4 @@
-﻿using OpenGame;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -697,14 +696,14 @@ public class CTilemap : Drawable
         }
         else
         {
-            file = Program.GetRtp().GetPath() + file;
+            file = RGSS.Utils.RtpPath + file;
             if (File.Exists(file))
             {
                 return file;
             }
             else
             {
-                Program.Error("Failed to load texture: " + filename);
+                RGSS.Utils.Error("Failed to load texture: " + filename);
                 return "";
             }
         }
@@ -718,7 +717,7 @@ public class CTilemap : Drawable
         layerFlag[(x * mapHeightInTiles) + y] = (flag > 0);
     }
 
-    internal static string ruby_helper()
+    public static string ruby_helper()
     {
         return @"
 
