@@ -101,6 +101,7 @@
     <None Include="Properties\Loader.rb" />
     <None Include="Properties\OpenGame.ico" />
     <None Include="packages.config" />
+    <None Include="Properties\RPG2.rb" />
     <None Include="Properties\RPG3.rb" />
     <None Include="Properties\System.rb" />
   </ItemGroup>

@@ -237,7 +237,9 @@ module Kernel
 end
 
 def rgss_start
-	filePath = 'Data/Scripts.rvdata2'
+	filePath = 'Data/Scripts.rxdata' if $RGSS_VERSION == 1
+	filePath = 'Data/Scripts.rvdata' if $RGSS_VERSION == 2
+	filePath = 'Data/Scripts.rvdata2' if $RGSS_VERSION == 3
     $RGSS_SCRIPTS = []
     unknownScript = 0
    

@@ -43,7 +43,13 @@ namespace OpenGame
             Console.WriteLine("Loader loaded");
 
             //Load the version appropriate RPG datatypes
-            //TODO: Add other RPG datatype versions
+            //TODO: Add RPG1 datatypes
+            if (Program.GetRGSSVersion() == 2)
+            {
+                script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG2);
+                script = script.Substring(1);
+                Eval(script);
+            }
             if (Program.GetRGSSVersion() == 3)
             {
                 script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG3);
@@ -54,7 +60,7 @@ namespace OpenGame
 
         public void Start()
         {
-            Graphics.initialize(Program.GetRtp().GetPath(), Program.Window, Program.ResolutionWidth, Program.ResolutionHeight);
+            Graphics.initialize(Program.GetRGSSVersion(), Program.GetRtp().GetPath(), Program.Window, Program.ResolutionWidth, Program.ResolutionHeight);
             engine.Execute(Window.ruby_helper(), scope);
             engine.Execute(CTilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);
@@ -67,7 +73,10 @@ namespace OpenGame
             engine.Execute(Font.ruby_helper(), scope);
             try
             {
-                engine.Execute(@"rgss_start", scope);
+                engine.Execute(@"
+                    $RGSS_VERSION = " + Program.GetRGSSVersion() + @"
+                    rgss_start
+                ", scope);
             }
             catch (Exception e)
             {

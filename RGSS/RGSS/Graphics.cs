@@ -22,9 +22,11 @@ public class Graphics
     public static Viewport default_viewport;
     public static GameWindow Window;
     public static string rtp_path = "";
+    public static int RgssVersion = 3;
 
-    public static void initialize(string rtp, GameWindow win, int resw, int resh)
+    public static void initialize(int version, string rtp, GameWindow win, int resw, int resh)
     {
+        RgssVersion = version;
         rtp_path = rtp;
         Window = win;
         width = resw;

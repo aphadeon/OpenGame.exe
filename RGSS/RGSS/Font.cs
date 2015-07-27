@@ -38,6 +38,11 @@ public class Font
             }
         }
         default_name = "VL Gothic";
+        if (Graphics.RgssVersion == 2)
+        {
+            default_name = "Verdana";
+            default_size = 20;
+        }
         default_font = new Font(default_name);
         //Console.WriteLine("Set default font to: " + default_font.name);
     }

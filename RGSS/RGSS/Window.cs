@@ -107,6 +107,14 @@ public class Window : Drawable
     }
 
     //inheritance constructor
+    public void initialize()
+    {
+        created_at = DateTime.Now;
+        z = 100;
+        move(0, 0, Graphics.width, Graphics.height);
+        viewport = Graphics.default_viewport;
+        viewport.sprites.Add(this);
+    }
     public void initialize(int ax, int ay, int aw, int ah)
     {
         created_at = DateTime.Now;
