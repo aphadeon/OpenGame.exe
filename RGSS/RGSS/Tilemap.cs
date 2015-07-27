@@ -696,14 +696,14 @@ public class CTilemap : Drawable
         }
         else
         {
-            file = RGSS.Utils.RtpPath + file;
+            file = Graphics.rtp_path + file;
             if (File.Exists(file))
             {
                 return file;
             }
             else
             {
-                RGSS.Utils.Error("Failed to load texture: " + filename);
+                Console.WriteLine("Failed to load texture: " + filename);
                 return "";
             }
         }

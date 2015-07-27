@@ -2,7 +2,7 @@
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Zlib'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
-load_assembly 'RGSS'
+require 'System\RGSS.dll'
 
 #test = Sprite.new
 

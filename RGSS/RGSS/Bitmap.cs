@@ -110,14 +110,14 @@ public class Bitmap
         }
         else
         {
-            file = Utils.RtpPath + file;
+            file = Graphics.rtp_path + file;
             if (File.Exists(file))
             {
                 return file;
             }
             else
             {
-                Utils.Error("Failed to load texture: " + filename);
+                Console.WriteLine("Failed to load texture: " + file);
                 return "";
             }
         }

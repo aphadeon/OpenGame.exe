@@ -25,7 +25,7 @@ public class Font
 
         List<string> list = new List<string>();
         if (Directory.Exists(@"Fonts\")) list.AddRange(Directory.GetFiles(@"Fonts\"));
-        list.AddRange(Directory.GetFiles(Utils.RtpPath + @"Fonts\"));
+        list.AddRange(Directory.GetFiles(Graphics.rtp_path + @"Fonts\"));
         string[] found = list.ToArray();
         int id = 0;
         foreach (string file in found)

@@ -43,34 +43,21 @@
     <ApplicationIcon>Properties\OpenGame.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronRuby, Version=1.1.3.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+    <Reference Include="IronRuby, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\IronRuby.1.1.3\Lib\IronRuby.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\lib\IronRuby.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries, Version=1.1.3.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\IronRuby.1.1.3\Lib\IronRuby.Libraries.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\lib\IronRuby.Libraries.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries.Yaml, Version=1.1.3.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Dynamic, Version=1.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\IronRuby.1.1.3\Lib\IronRuby.Libraries.Yaml.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\lib\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic">
-      <HintPath>packages\IronRuby.1.1.3\Lib\Microsoft.Dynamic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Scripting, Version=1.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\IronRuby.1.1.3\Lib\Microsoft.Scripting.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\IronRuby.1.1.3\Lib\Microsoft.Scripting.Metadata.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\lib\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
@@ -114,7 +101,7 @@
     <None Include="Properties\System.rb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="src\RGSS\RGSS.csproj">
+    <ProjectReference Include="RGSS\RGSS.csproj">
       <Project>{c91aca5c-52a1-4433-b150-822779acced6}</Project>
       <Name>RGSS</Name>
       <Private>False</Private>

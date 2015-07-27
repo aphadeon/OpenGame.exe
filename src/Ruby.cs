@@ -54,7 +54,7 @@ namespace OpenGame
 
         public void Start()
         {
-            Graphics.initialize();
+            Graphics.initialize(Program.GetRtp().GetPath(), Program.Window, Program.ResolutionWidth, Program.ResolutionHeight);
             engine.Execute(Window.ruby_helper(), scope);
             engine.Execute(CTilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);
