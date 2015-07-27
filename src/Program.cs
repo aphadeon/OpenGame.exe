@@ -22,6 +22,8 @@ namespace OpenGame
         //An int to track the RGSS Version- will be set to 1, 2, or 3.
         private static int RGSSVersion;
 
+        private static string GameTitle;
+
         private static Ruby Ruby;
 
         public static GameWindow Window;
@@ -64,7 +66,9 @@ namespace OpenGame
             {
                 ReadRGSSVersion();
             }
-            
+
+            ReadGameTitle();
+                       
             //Setup the RTP
             Rtp = new RTP(AssemblyDirectory);
 
@@ -105,7 +109,7 @@ namespace OpenGame
         public static void OnLoad()
         {
             Window.VSync = VSyncMode.On;
-            Window.Title = "OpenGame.exe"; //TODO: load title from ini
+            Window.Title = GameTitle;
 
             //setup opengl
             GL.MatrixMode(MatrixMode.Projection);
@@ -176,6 +180,43 @@ namespace OpenGame
             }
             if(i < 1 || i > 3) Program.Error("Unsupported RGSS version");
             RGSSVersion = i;
+        }
+
+        private static void ReadGameTitle()
+        {
+            string s = "";
+            try
+            {
+                s = File.ReadAllText("Game.ini");
+            }
+            catch
+            {
+                Program.Error("Could not load Game.ini");
+            }
+
+            string t = "";
+            int i, r, n; //Start index, index of \r, index of \n
+            try
+            {
+                i = s.IndexOf("Title=") + "Title=".Length;
+
+                r = s.IndexOf('\u000D', i); //Search for \r
+                n = s.IndexOf('\u000A', i); //Search for \n
+
+                //Length of the sub-string is up to the next occurance of \r or \n after i
+                t = s.Substring(i, (r < n ? r : n) - i);
+            }
+            catch
+            {
+                Program.Error("Could not retrieve Title from Game.ini");
+            }
+
+            GameTitle = t;
+
+            #if DEBUG
+                //Debug builds appended with - debug
+                GameTitle += " - debug";
+            #endif
         }
 
         //A temporary error method until a better logger/crash handler is provided
