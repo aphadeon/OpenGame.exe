@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGame.exe", "OpenGame.exe.csproj", "{13A28048-DAF4-4478-8CBB-C4E4B87E8957}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,16 +23,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.ActiveCfg = Release|x86
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.Build.0 = Release|x86
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.ActiveCfg = Debug|x86
+		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.Build.0 = Debug|x86
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|x86.ActiveCfg = Release|x86
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|x86.Build.0 = Release|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug|x86.ActiveCfg = Debug|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug|x86.Build.0 = Debug|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release|x86.ActiveCfg = Release|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release|x86.Build.0 = Release|x86
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
