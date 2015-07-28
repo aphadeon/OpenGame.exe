@@ -1,21 +1,17 @@
-@echo Checking dependencies...
-@echo.
-@if not exist %solutiondir%\bin\ mkdir %solutiondir%\bin\
-@if not exist %solutiondir%\bin\Debug mkdir %solutiondir%\bin\Debug
-@if not exist %solutiondir%\bin\Release mkdir %solutiondir%\bin\Release
-@if not exist %solutiondir%\bin\Debug\System mkdir %solutiondir%\bin\Debug\System
-@if not exist %solutiondir%\bin\Release\System mkdir %solutiondir%\bin\Release\System
-copy %solutiondir%bin\RGSS\RGSS.dll %solutiondir%bin\Debug\System\RGSS.dll
-copy %solutiondir%bin\RGSS\RGSS.dll %solutiondir%bin\Release\System\RGSS.dll
-copy %solutiondir%lib\IronRuby.dll %solutiondir%\bin\Release\System\IronRuby.dll
-copy %solutiondir%lib\IronRuby.dll %solutiondir%\bin\Debug\System\IronRuby.dll
-copy %solutiondir%lib\IronRuby.Libraries.dll %solutiondir%\bin\Release\System\IronRuby.Libraries.dll
-copy %solutiondir%lib\IronRuby.Libraries.dll %solutiondir%\bin\Debug\System\IronRuby.Libraries.dll
-copy %solutiondir%lib\Microsoft.Dynamic.dll %solutiondir%\bin\Release\System\Microsoft.Dynamic.dll
-copy %solutiondir%lib\Microsoft.Dynamic.dll %solutiondir%\bin\Debug\System\Microsoft.Dynamic.dll
-copy %solutiondir%lib\Microsoft.Scripting.dll %solutiondir%\bin\Release\System\Microsoft.Scripting.dll
-copy %solutiondir%lib\Microsoft.Scripting.dll %solutiondir%\bin\Debug\System\Microsoft.Scripting.dll
-copy %solutiondir%packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll %solutiondir%\bin\Debug\System\OpenTK.dll
-copy %solutiondir%packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll %solutiondir%\bin\Release\System\OpenTK.dll
-@echo Dependency check finished.
-@echo.
+@if not exist .\bin\ mkdir .\bin\
+@if not exist .\bin\Debug mkdir .\bin\Debug
+@if not exist .\bin\Release mkdir .\bin\Release
+@if not exist .\bin\Debug\System mkdir .\bin\Debug\System
+@if not exist .\bin\Release\System mkdir .\bin\Release\System
+copy .\bin\RGSS\RGSS.dll .\bin\Debug\System\RGSS.dll
+copy .\bin\RGSS\RGSS.dll .\bin\Release\System\RGSS.dll
+copy .\lib\IronRuby.dll .\bin\Release\System\IronRuby.dll
+copy .\lib\IronRuby.dll .\bin\Debug\System\IronRuby.dll
+copy .\lib\IronRuby.Libraries.dll .\bin\Release\System\IronRuby.Libraries.dll
+copy .\lib\IronRuby.Libraries.dll .\bin\Debug\System\IronRuby.Libraries.dll
+copy .\lib\Microsoft.Dynamic.dll .\bin\Release\System\Microsoft.Dynamic.dll
+copy .\lib\Microsoft.Dynamic.dll .\bin\Debug\System\Microsoft.Dynamic.dll
+copy .\lib\Microsoft.Scripting.dll .\bin\Release\System\Microsoft.Scripting.dll
+copy .\lib\Microsoft.Scripting.dll .\bin\Debug\System\Microsoft.Scripting.dll
+copy .\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll .\bin\Debug\System\OpenTK.dll
+copy .\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll .\bin\Release\System\OpenTK.dll
