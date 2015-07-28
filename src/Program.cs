@@ -24,6 +24,8 @@ namespace OpenGame
 
         private static string GameTitle;
 
+        private static string GameDirectory;
+
         private static Ruby Ruby;
 
         public static GameWindow Window;
@@ -55,6 +57,18 @@ namespace OpenGame
 
             //Store the command-line switches
             Switches = new CommandLineSwitches(args);
+
+            //Change working directory to game content (default ".")
+            //The directory will only change if it is valid
+            GameDirectory = Switches.GetGameDirectory();
+            if (Directory.Exists(GameDirectory))
+            {
+                Directory.SetCurrentDirectory(GameDirectory);
+            }
+            else
+            {
+                Program.Error("Game Directory \"" + GameDirectory + "\" not found");
+            }
 
             //Read which version of RGSS we are aiming to emulate
             //or observe the forced version commandline switch
