@@ -25,19 +25,27 @@ public class Font
 
         List<string> list = new List<string>();
         if (Directory.Exists(@"Fonts\")) list.AddRange(Directory.GetFiles(@"Fonts\"));
-        list.AddRange(Directory.GetFiles(Graphics.rtp_path + @"Fonts\"));
-        string[] found = list.ToArray();
-        int id = 0;
-        foreach (string file in found)
+        if(Graphics.RgssVersion > 1) list.AddRange(Directory.GetFiles(Graphics.rtp_path + @"Fonts\"));
+        if (list.Count > 0)
         {
-            if (Path.GetExtension(file) == ".ttf")
+            string[] found = list.ToArray();
+            int id = 0;
+            foreach (string file in found)
             {
-                private_fonts.AddFontFile(file);
-                //Console.WriteLine("Installed font: " + private_fonts.Families[id].Name);
-                id++;
+                if (Path.GetExtension(file) == ".ttf")
+                {
+                    private_fonts.AddFontFile(file);
+                    //Console.WriteLine("Installed font: " + private_fonts.Families[id].Name);
+                    id++;
+                }
             }
         }
         default_name = "VL Gothic";
+        if (Graphics.RgssVersion == 1)
+        {
+            default_name = "MS PGothic";
+            default_size = 22;
+        }
         if (Graphics.RgssVersion == 2)
         {
             default_name = "Verdana";

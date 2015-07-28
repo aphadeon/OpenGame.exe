@@ -80,6 +80,7 @@ module RPG
     end
   end
 end
+
 module RPG
   class Sprite < ::Sprite
     @@_animations = []
@@ -462,6 +463,7 @@ module RPG
     end
   end
 end
+
 module RPG
   class Weather
     def initialize(viewport = nil)
@@ -613,6 +615,7 @@ module RPG
     attr_accessor :events
   end
 end
+
 module RPG
   class MapInfo
     def initialize
@@ -758,8 +761,8 @@ module RPG
   end
 end
 module RPG
-  class MoveCommand(code = 0, parameters = [])
-    def initialize
+  class MoveCommand
+    def initialize(code = 0, parameters = [])
       @code = code
       @parameters = parameters
     end
@@ -767,6 +770,7 @@ module RPG
     attr_accessor :parameters
   end
 end
+
 module RPG
   class Actor
     def initialize
@@ -971,6 +975,7 @@ module RPG
     attr_accessor :minus_state_set
   end
 end
+
 module RPG
   class Weapon
     def initialize
@@ -1105,6 +1110,7 @@ module RPG
     attr_accessor :treasure_prob
   end
 end
+
 module RPG
   class Enemy
     class Action
@@ -1516,5 +1522,27 @@ module RPG
     attr_accessor :name
     attr_accessor :volume
     attr_accessor :pitch
+  end
+end
+module RPG
+  class System
+    class TestBattler
+      def initialize
+        @actor_id = 1
+        @level = 1
+        @weapon_id = 0
+        @armor1_id = 0
+        @armor2_id = 0
+        @armor3_id = 0
+        @armor4_id = 0
+      end
+      attr_accessor :actor_id
+      attr_accessor :level
+      attr_accessor :weapon_id
+      attr_accessor :armor1_id
+      attr_accessor :armor2_id
+      attr_accessor :armor3_id
+      attr_accessor :armor4_id
+    end
   end
 end
