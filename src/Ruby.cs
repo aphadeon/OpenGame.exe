@@ -36,11 +36,23 @@ namespace OpenGame
             string script = System.Text.Encoding.UTF8.GetString(Properties.Resources.System);
             script = script.Substring(1);  //fix for a weird character that shouldn't be there o.O
             Eval(script);
-            Console.WriteLine("Loading loader");
             script = System.Text.Encoding.UTF8.GetString(Properties.Resources.Loader);
             script = script.Substring(1); //fix for weird initial character
             Eval(script);
-            Console.WriteLine("Loader loaded");
+
+            try
+            {
+                engine.Execute(@"$RGSS_VERSION = " + Program.GetRGSSVersion(), scope);
+            }
+            catch (Exception e)
+            {
+                Program.Error(e.Message);
+            }
+
+            //Load the adaptable RPG datatypes
+            script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG);
+            script = script.Substring(1);
+            Eval(script);
 
             //Load the version appropriate RPG datatypes
             if (Program.GetRGSSVersion() == 1)
@@ -76,12 +88,11 @@ namespace OpenGame
             engine.Execute(Bitmap.ruby_helper(), scope);
             Font.load_fonts();
             engine.Execute(Font.ruby_helper(), scope);
+
+
             try
             {
-                engine.Execute(@"
-                    $RGSS_VERSION = " + Program.GetRGSSVersion() + @"
-                    rgss_start
-                ", scope);
+                engine.Execute(@"rgss_start", scope);
             }
             catch (Exception e)
             {
