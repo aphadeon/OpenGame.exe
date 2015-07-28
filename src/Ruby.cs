@@ -43,7 +43,12 @@ namespace OpenGame
             Console.WriteLine("Loader loaded");
 
             //Load the version appropriate RPG datatypes
-            //TODO: Add RPG1 datatypes
+            if (Program.GetRGSSVersion() == 1)
+            {
+                script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG1);
+                script = script.Substring(1);
+                Eval(script);
+            }
             if (Program.GetRGSSVersion() == 2)
             {
                 script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG2);

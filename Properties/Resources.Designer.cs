@@ -83,6 +83,16 @@ namespace OpenGame.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] RPG1 {
+            get {
+                object obj = ResourceManager.GetObject("RPG1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] RPG2 {
             get {
                 object obj = ResourceManager.GetObject("RPG2", resourceCulture);
