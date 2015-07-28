@@ -60,6 +60,24 @@ class Rect
 end
 
 module Input
+	DOWN = 0
+	LEFT = 1
+	RIGHT = 2
+	UP = 3
+	A = 4
+	B = 5
+	C = 6
+	L = 7
+	R = 8
+	SHIFT = 9
+	CTRL = 10
+	ALT = 11
+	F5 = 12
+	F6 = 13
+	F7 = 14
+	F8 = 15
+	F9 = 16
+
 	def Input.get_code_from_symbol(sym)
 		case sym
 		when :DOWN then return 0
@@ -89,13 +107,28 @@ module Input
 		end
 	end
     def Input.press?(sym)
-        return RGSS::Input.is_pressed(get_code_from_symbol(sym))
+	  case sym
+		when Symbol
+		  return RGSS::Input.is_pressed(get_code_from_symbol(sym))
+		else
+		  return RGSS::Input.is_pressed(sym)
+	   end
     end
     def Input.trigger?(sym)
-		return RGSS::Input.is_triggered(get_code_from_symbol(sym))
+	    case sym
+		when Symbol
+		  return RGSS::Input.is_triggered(get_code_from_symbol(sym))
+		else
+		  return RGSS::Input.is_triggered(sym)
+	   end
     end
     def Input.repeat?(sym)
-		return RGSS::Input.is_repeat(get_code_from_symbol(sym))
+		case sym
+		when Symbol
+		  return RGSS::Input.is_repeat(get_code_from_symbol(sym))
+		else
+		  return RGSS::Input.is_repeat(sym)
+	   end
     end
     def Input.dir4
 		return 4 if(press?(:LEFT))
