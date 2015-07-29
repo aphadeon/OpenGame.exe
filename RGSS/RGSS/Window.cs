@@ -186,14 +186,10 @@ public class Window : Drawable
         if (!visible || opacity <= 0 || disposed) return;
 
         //windowskin
-        if (windowskin != null && windowskin.txid != 0 && back_opacity > 0 && openness >= 0)
+        if (windowskin != null && windowskin.txid != 0 && openness >= 0)
         {
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, windowskin.txid);
-
-            float winAlpha = (float)back_opacity / 255.0f;
-
-            GL.Color4(1.0f, 1.0f, 1.0f, winAlpha);
 
             //clone position values to mod them for openness
             int mod_y = (int)(((1f / 255f) * (float) openness) * height);
@@ -203,129 +199,144 @@ public class Window : Drawable
             int aah = mod_y;
             if (mod_y > 1)
             {
-                GL.Begin(BeginMode.Quads);
-
-                //background layer 1
-                GL.TexCoord2(0f, 0f);
-                GL.Vertex3(aax + 2, aay + 2, 0.2f);
-                GL.TexCoord2(0.5f, 0f);
-                GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
-                GL.TexCoord2(0.5f, 0.5f);
-                GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
-                GL.TexCoord2(0f, 0.5f);
-                GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
-
-                //background layer 2 - Drawn top to bottom, left to right
-                int tileX = aax + 2;
-                int endX = aaw - 4;
-
-                float tileUVX = 0.5f;
-                int tileEndX = 64;
-
-                int xx; //Outside of loop so it can be used for the right column
-                for (xx = 0; xx < endX; xx += 64)
+                if (back_opacity > 0)
                 {
-                    if (xx + tileEndX > endX)
-                    {
-                        tileEndX = endX - xx;
-                        tileUVX = (float)tileEndX / 128.0f;
-                    }
+                    float bgAlpha = (float)back_opacity / 255.0f;
 
-                    int tileY = aay + 2;
-                    int endY = aah - 64 - 4;
+                    GL.Color4(1.0f, 1.0f, 1.0f, bgAlpha);
 
-                    int yy; //Outside of loop so it can be used for the bottom row
-                    for (yy = 0; yy < endY; yy += 64)
+                    GL.Begin(BeginMode.Quads);
+
+                    //background layer 1
+                    GL.TexCoord2(0f, 0f);
+                    GL.Vertex3(aax + 2, aay + 2, 0.2f);
+                    GL.TexCoord2(0.5f, 0f);
+                    GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
+                    GL.TexCoord2(0.5f, 0.5f);
+                    GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
+                    GL.TexCoord2(0f, 0.5f);
+                    GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+
+                    GL.End();
+
+                    GL.BlendFuncSeparate(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha, BlendingFactorSrc.Zero, BlendingFactorDest.One);
+
+                    GL.Begin(BeginMode.Quads);
+
+                    //background layer 2 - Drawn top to bottom, left to right
+                    int tileX = aax + 2;
+                    int endX = aaw - 4;
+
+                    float tileUVX = 0.5f;
+                    int tileEndX = 64;
+
+                    int xx; //Outside of loop so it can be used for the right column
+                    for (xx = 0; xx < endX; xx += 64)
                     {
+                        if (xx + tileEndX > endX)
+                        {
+                            tileEndX = endX - xx;
+                            tileUVX = (float)tileEndX / 128.0f;
+                        }
+
+                        int tileY = aay + 2;
+                        int endY = aah - 64 - 4;
+
+                        int yy; //Outside of loop so it can be used for the bottom row
+                        for (yy = 0; yy < endY; yy += 64)
+                        {
+                            GL.TexCoord2(0f, 0.5f);
+                            GL.Vertex3(tileX + xx, tileY + yy, 0.2f);
+
+                            GL.TexCoord2(tileUVX, 0.5f);
+                            GL.Vertex3(tileX + xx + tileEndX, tileY + yy, 0.2f);
+
+                            GL.TexCoord2(tileUVX, 1.0f);
+                            GL.Vertex3(tileX + xx + tileEndX, tileY + yy + 64, 0.2f);
+
+                            GL.TexCoord2(0f, 1.0f);
+                            GL.Vertex3(tileX + xx, tileY + yy + 64, 0.2f);
+                        }
+
+                        if (endY < 0)
+                        {
+                            endY += 64; //Corrects for when height < 64
+                        }
+
+                        float endUVY = 0.5f + ((float)endY / 128.0f);
+
                         GL.TexCoord2(0f, 0.5f);
                         GL.Vertex3(tileX + xx, tileY + yy, 0.2f);
 
                         GL.TexCoord2(tileUVX, 0.5f);
                         GL.Vertex3(tileX + xx + tileEndX, tileY + yy, 0.2f);
 
-                        GL.TexCoord2(tileUVX, 1.0f);
-                        GL.Vertex3(tileX + xx + tileEndX, tileY + yy + 64, 0.2f);
+                        GL.TexCoord2(tileUVX, endUVY);
+                        GL.Vertex3(tileX + xx + tileEndX, tileY + yy + endY, 0.2f);
 
-                        GL.TexCoord2(0f, 1.0f);
-                        GL.Vertex3(tileX + xx, tileY + yy + 64, 0.2f);
+                        GL.TexCoord2(0f, endUVY);
+                        GL.Vertex3(tileX + xx, tileY + yy + endY, 0.2f);
                     }
 
-                    if (endY < 0)
-                    {
-                        endY += 64; //Corrects for when height < 64
-                    }
-                    
-                    float endUVY = 0.5f + ((float)endY / 128.0f);
-
-                    GL.TexCoord2(0f, 0.5f);
-                    GL.Vertex3(tileX + xx, tileY + yy, 0.2f);
-
-                    GL.TexCoord2(tileUVX, 0.5f);
-                    GL.Vertex3(tileX + xx + tileEndX, tileY + yy, 0.2f);
-
-                    GL.TexCoord2(tileUVX, endUVY);
-                    GL.Vertex3(tileX + xx + tileEndX, tileY + yy + endY, 0.2f);
-
-                    GL.TexCoord2(0f, endUVY);
-                    GL.Vertex3(tileX + xx, tileY + yy + endY, 0.2f);
-                }
-
-                //Tint the background layers
-                if (tone.red != 0 || tone.green != 0 || tone.blue != 0)
-                {
                     GL.End();
 
-                    GL.Disable(EnableCap.Texture2D);
-                    GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
-
-                    if (tone.red > 0 || tone.green > 0 || tone.blue > 0)
+                    //Tint the background layers
+                    if (tone.red != 0 || tone.green != 0 || tone.blue != 0)
                     {
-                        float addR = (tone.red > 0 ? (float)tone.red / 255.0f * winAlpha : 0.0f);
-                        float addG = (tone.green > 0 ? (float)tone.green / 255.0f * winAlpha : 0.0f);
-                        float addB = (tone.blue > 0 ? (float)tone.blue / 255.0f * winAlpha : 0.0f);
+                        GL.Disable(EnableCap.Texture2D);
+                        GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
 
-                        GL.Color4(addR, addG, addB, 0.0f);
+                        if (tone.red > 0 || tone.green > 0 || tone.blue > 0)
+                        {
+                            float addR = (tone.red > 0 ? (float)tone.red / 255.0f * bgAlpha : 0.0f);
+                            float addG = (tone.green > 0 ? (float)tone.green / 255.0f * bgAlpha : 0.0f);
+                            float addB = (tone.blue > 0 ? (float)tone.blue / 255.0f * bgAlpha : 0.0f);
+
+                            GL.Color4(addR, addG, addB, 0.0f);
+                            GL.BlendEquation(BlendEquationMode.FuncAdd);
+
+                            GL.Begin(BeginMode.Quads);
+
+                            GL.Vertex3(aax + 2, aay + 2, 0.2f);
+                            GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
+                            GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
+                            GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+
+                            GL.End();
+                        }
+
+                        if (tone.red < 0 || tone.green < 0 || tone.blue < 0)
+                        {
+                            float subR = (tone.red < 0 ? -(float)tone.red / 255.0f * bgAlpha : 0.0f);
+                            float subG = (tone.green < 0 ? -(float)tone.green / 255.0f * bgAlpha : 0.0f);
+                            float subB = (tone.blue < 0 ? -(float)tone.blue / 255.0f * bgAlpha : 0.0f);
+
+                            GL.Color4(subR, subG, subB, 0.0f);
+                            GL.BlendEquation(BlendEquationMode.FuncReverseSubtract);
+
+                            GL.Begin(BeginMode.Quads);
+
+                            GL.Vertex3(aax + 2, aay + 2, 0.2f);
+                            GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
+                            GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
+                            GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+
+                            GL.End();
+                        }
+
                         GL.BlendEquation(BlendEquationMode.FuncAdd);
 
-                        GL.Begin(BeginMode.Quads);
-
-                        GL.Vertex3(aax + 2, aay + 2, 0.2f);
-                        GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
-                        GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
-                        GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
-
-                        GL.End();
+                        GL.Enable(EnableCap.Texture2D);
                     }
 
-                    if (tone.red < 0 || tone.green < 0 || tone.blue < 0)
-                    {
-                        float subR = (tone.red < 0 ? -(float)tone.red / 255.0f * winAlpha : 0.0f);
-                        float subG = (tone.green < 0 ? -(float)tone.green / 255.0f * winAlpha : 0.0f);
-                        float subB = (tone.blue < 0 ? -(float)tone.blue / 255.0f * winAlpha : 0.0f);
-
-                        GL.Color4(subR, subG, subB, 0.0f);
-                        GL.BlendEquation(BlendEquationMode.FuncReverseSubtract);
-
-                        GL.Begin(BeginMode.Quads);
-
-                        GL.Vertex3(aax + 2, aay + 2, 0.2f);
-                        GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
-                        GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
-                        GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
-
-                        GL.End();
-                    }
-
-                    GL.BlendEquation(BlendEquationMode.FuncAdd);
                     GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                    GL.Color4(1.0f, 1.0f, 1.0f, winAlpha);
-                    GL.Enable(EnableCap.Texture2D);
-
-                    GL.Begin(BeginMode.Quads);
                 }
 
                 //corners
                 GL.Color4(1.0f, 1.0f, 1.0f, 1f);
+
+                GL.Begin(BeginMode.Quads);
+
                 //topleft corner
                 float uvtile = 0.125f; // 1f / 8f
                 GL.TexCoord2(0.5f, 0f);
