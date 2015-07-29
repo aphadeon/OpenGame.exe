@@ -191,7 +191,9 @@ public class Window : Drawable
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, windowskin.txid);
 
-            GL.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float)back_opacity);
+            float winAlpha = (float)back_opacity / 255.0f;
+
+            GL.Color4(1.0f, 1.0f, 1.0f, winAlpha);
 
             //clone position values to mod them for openness
             int mod_y = (int)(((1f / 255f) * (float) openness) * height);
@@ -271,8 +273,6 @@ public class Window : Drawable
                 //Tint the background layers
                 if (tone.red != 0 || tone.green != 0 || tone.blue != 0)
                 {
-                    float alpha = (float)back_opacity / 255.0f;
-
                     GL.End();
 
                     GL.Disable(EnableCap.Texture2D);
@@ -280,9 +280,9 @@ public class Window : Drawable
 
                     if (tone.red > 0 || tone.green > 0 || tone.blue > 0)
                     {
-                        float addR = (tone.red > 0 ? (float)tone.red / 255.0f * alpha : 0.0f);
-                        float addG = (tone.green > 0 ? (float)tone.green / 255.0f * alpha : 0.0f);
-                        float addB = (tone.blue > 0 ? (float)tone.blue / 255.0f * alpha : 0.0f);
+                        float addR = (tone.red > 0 ? (float)tone.red / 255.0f * winAlpha : 0.0f);
+                        float addG = (tone.green > 0 ? (float)tone.green / 255.0f * winAlpha : 0.0f);
+                        float addB = (tone.blue > 0 ? (float)tone.blue / 255.0f * winAlpha : 0.0f);
 
                         GL.Color4(addR, addG, addB, 0.0f);
                         GL.BlendEquation(BlendEquationMode.FuncAdd);
@@ -299,9 +299,9 @@ public class Window : Drawable
 
                     if (tone.red < 0 || tone.green < 0 || tone.blue < 0)
                     {
-                        float subR = (tone.red < 0 ? -(float)tone.red / 255.0f * alpha : 0.0f);
-                        float subG = (tone.green < 0 ? -(float)tone.green / 255.0f * alpha : 0.0f);
-                        float subB = (tone.blue < 0 ? -(float)tone.blue / 255.0f * alpha : 0.0f);
+                        float subR = (tone.red < 0 ? -(float)tone.red / 255.0f * winAlpha : 0.0f);
+                        float subG = (tone.green < 0 ? -(float)tone.green / 255.0f * winAlpha : 0.0f);
+                        float subB = (tone.blue < 0 ? -(float)tone.blue / 255.0f * winAlpha : 0.0f);
 
                         GL.Color4(subR, subG, subB, 0.0f);
                         GL.BlendEquation(BlendEquationMode.FuncReverseSubtract);
@@ -318,7 +318,7 @@ public class Window : Drawable
 
                     GL.BlendEquation(BlendEquationMode.FuncAdd);
                     GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                    GL.Color4(1.0f, 1.0f, 1.0f, alpha);
+                    GL.Color4(1.0f, 1.0f, 1.0f, winAlpha);
                     GL.Enable(EnableCap.Texture2D);
 
                     GL.Begin(BeginMode.Quads);
