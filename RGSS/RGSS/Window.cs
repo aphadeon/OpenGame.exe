@@ -213,15 +213,60 @@ public class Window : Drawable
                 GL.TexCoord2(0f, 0.5f);
                 GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
 
-                //background layer 2 - NEEDS TO BE TILED
-                GL.TexCoord2(0f, 0.5f);
-                GL.Vertex3(aax + 2, aay + 2, 0.2f);
-                GL.TexCoord2(0.5f, 0.5f);
-                GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
-                GL.TexCoord2(0.5f, 1f);
-                GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
-                GL.TexCoord2(0f, 1f);
-                GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+                //background layer 2 - Drawn top to bottom, left to right
+                int tileX = aax + 2;
+                int endX = aaw - 4;
+
+                float tileUVX = 0.5f;
+                int tileEndX = 64;
+
+                int xx; //Outside of loop so it can be used for the right column
+                for (xx = 0; xx < endX; xx += 64)
+                {
+                    if (xx + tileEndX > endX)
+                    {
+                        tileEndX = endX - xx;
+                        tileUVX = (float)tileEndX / 128.0f;
+                    }
+
+                    int tileY = aay + 2;
+                    int endY = aah - 64 - 4;
+
+                    int yy; //Outside of loop so it can be used for the bottom row
+                    for (yy = 0; yy < endY; yy += 64)
+                    {
+                        GL.TexCoord2(0f, 0.5f);
+                        GL.Vertex3(tileX + xx, tileY + yy, 0.2f);
+
+                        GL.TexCoord2(tileUVX, 0.5f);
+                        GL.Vertex3(tileX + xx + tileEndX, tileY + yy, 0.2f);
+
+                        GL.TexCoord2(tileUVX, 1.0f);
+                        GL.Vertex3(tileX + xx + tileEndX, tileY + yy + 64, 0.2f);
+
+                        GL.TexCoord2(0f, 1.0f);
+                        GL.Vertex3(tileX + xx, tileY + yy + 64, 0.2f);
+                    }
+
+                    if (endY < 0)
+                    {
+                        endY += 64; //Corrects for when height < 64
+                    }
+                    
+                    float endUVY = 0.5f + ((float)endY / 128.0f);
+
+                    GL.TexCoord2(0f, 0.5f);
+                    GL.Vertex3(tileX + xx, tileY + yy, 0.2f);
+
+                    GL.TexCoord2(tileUVX, 0.5f);
+                    GL.Vertex3(tileX + xx + tileEndX, tileY + yy, 0.2f);
+
+                    GL.TexCoord2(tileUVX, endUVY);
+                    GL.Vertex3(tileX + xx + tileEndX, tileY + yy + endY, 0.2f);
+
+                    GL.TexCoord2(0f, endUVY);
+                    GL.Vertex3(tileX + xx, tileY + yy + endY, 0.2f);
+                }
 
                 //corners
                 GL.Color4(1.0f, 1.0f, 1.0f, 1f);

@@ -20,6 +20,7 @@ namespace OpenGame
         private int DefaultResolutionWidth;
         private int DefaultResolutionHeight;
         private List<String> ResourcePaths;
+        private string PathDelimiter;
 
         public RuntimeConfiguration(string[] parameters)
         {
@@ -32,18 +33,27 @@ namespace OpenGame
             // Is this a Windows targeted build?
             WindowsOS = CheckIfWindowsOS();
             
-            // Enable the console if applicable
-            if (WindowsOS && Debug)
+            if (WindowsOS)
             {
-                var handle = GetConsoleWindow();
-                if (handle == IntPtr.Zero)
+                PathDelimiter = "\\";
+
+                // Enable the console if applicable
+                if (Debug)
                 {
-                    AllocConsole();
-                }
-                else
-                {
-                    ShowWindow(handle, SW_SHOW);
-                }
+                    var handle = GetConsoleWindow();
+                    if (handle == IntPtr.Zero)
+                    {
+                        AllocConsole();
+                    }
+                    else
+                    {
+                        ShowWindow(handle, SW_SHOW);
+                    }
+                }                
+            }
+            else
+            {
+                PathDelimiter = "/";
             }
 
             // Setup command-line parameter defaults
@@ -63,7 +73,7 @@ namespace OpenGame
                     case "-game":
                         i++; //pre-emptively increment to the accompanying parameter
                         //Set the DataPath where we will look for game files
-                        DataPath = parameters[i].Replace("\"", "");
+                        DataPath = ResolvePath(parameters[i].Replace("\"", ""));
                         break;
                     case "-rtp":
                         i++; //pre-emptively increment to the accompanying parameter
@@ -250,6 +260,30 @@ namespace OpenGame
             }
 
             return title;
+        }
+
+        // Here to make sure any OS paths are correctly formatted (ending with delimiter)
+        private string ResolvePath(string path)
+        {
+            string s;
+
+            //Windows software usually supports / delimiters, so we can convert any of those to \\
+            if (WindowsOS && path.EndsWith("/"))
+            {
+                s = path.Replace("/", PathDelimiter);
+            }
+            else
+            {
+                s = path;
+            }
+
+            //Make sure the DataPath correctly ends with the OS' path delimiter
+            if (!s.EndsWith(PathDelimiter))
+            {
+                s += PathDelimiter;
+            }
+
+            return s;
         }
 
         // These tests are run once at startup to determine whether the Operating System is Windows.
