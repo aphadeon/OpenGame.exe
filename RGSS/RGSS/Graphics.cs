@@ -22,7 +22,7 @@ public class Graphics
     public static Viewport default_viewport;
     public static GameWindow Window;
 
-    internal static Stack<Action> deferredActions = new Stack<Action>();
+    internal static Queue<Action> deferredActions = new Queue<Action>();
     internal static Mutex deferredMutex = new Mutex();
     internal static bool hasDeferredActions = false;
     internal static int mainThreadId;
@@ -53,12 +53,8 @@ public class Graphics
         {
             deferredMutex.WaitOne();
 
-            int cc = deferredActions.Count();
-
-            Action action;
-            while (cc-- != 0)
+            foreach (Action action in deferredActions)
             {
-                action = deferredActions.Pop();
                 action();
             }
 
@@ -79,7 +75,7 @@ public class Graphics
         {
             deferredMutex.WaitOne();
 
-            deferredActions.Push(action);
+            deferredActions.Enqueue(action);
             hasDeferredActions = true;
 
             deferredMutex.ReleaseMutex();

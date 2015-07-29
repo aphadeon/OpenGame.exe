@@ -317,7 +317,6 @@ public class Bitmap
         {
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
-
         
         Graphics.deferred_action_add(syncBitmap);
 
