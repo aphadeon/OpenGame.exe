@@ -20,6 +20,7 @@ namespace OpenGame
         private int DefaultResolutionWidth;
         private int DefaultResolutionHeight;
         private List<String> ResourcePaths;
+        private string PathDelimiter;
 
         public RuntimeConfiguration(string[] parameters)
         {
@@ -32,18 +33,27 @@ namespace OpenGame
             // Is this a Windows targeted build?
             WindowsOS = CheckIfWindowsOS();
             
-            // Enable the console if applicable
-            if (WindowsOS && Debug)
+            if (WindowsOS)
             {
-                var handle = GetConsoleWindow();
-                if (handle == IntPtr.Zero)
+                PathDelimiter = "\\";
+
+                // Enable the console if applicable
+                if (Debug)
                 {
-                    AllocConsole();
-                }
-                else
-                {
-                    ShowWindow(handle, SW_SHOW);
-                }
+                    var handle = GetConsoleWindow();
+                    if (handle == IntPtr.Zero)
+                    {
+                        AllocConsole();
+                    }
+                    else
+                    {
+                        ShowWindow(handle, SW_SHOW);
+                    }
+                }                
+            }
+            else
+            {
+                PathDelimiter = "/";
             }
 
             // Setup command-line parameter defaults
@@ -64,6 +74,12 @@ namespace OpenGame
                         i++; //pre-emptively increment to the accompanying parameter
                         //Set the DataPath where we will look for game files
                         DataPath = parameters[i].Replace("\"", "");
+
+                        //Make sure the DataPath correctly ends with the OS' path delimiter
+                        if (!DataPath.EndsWith(PathDelimiter))
+                        {
+                            DataPath += PathDelimiter;
+                        }
                         break;
                     case "-rtp":
                         i++; //pre-emptively increment to the accompanying parameter
