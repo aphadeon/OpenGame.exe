@@ -689,24 +689,14 @@ public class CTilemap : Drawable
     private string FindTexture(string filename)
     {
         //Console.WriteLine("Loading tileset image: " + filename);
-        string file = @"\Graphics\Tilesets\" + filename + ".png";
-        if (File.Exists(file))
+        string file = @"Graphics\Tilesets\" + filename;
+        file = Runtime.FindImageResource(file);
+        if (file == null)
         {
-            return file;
+            Console.WriteLine("Failed to load texture: " + filename);
+            return "";
         }
-        else
-        {
-            file = Graphics.rtp_path + file;
-            if (File.Exists(file))
-            {
-                return file;
-            }
-            else
-            {
-                Console.WriteLine("Failed to load texture: " + filename);
-                return "";
-            }
-        }
+        return file;
     }
 
     public void set_tile(int x, int y, int layer, int tileid, int flag)

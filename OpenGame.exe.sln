@@ -20,27 +20,17 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
-		Debug-NoWindows|x86 = Debug-NoWindows|x86
 		Release|x86 = Release|x86
-		Release-NoWindows|x86 = Release-NoWindows|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.ActiveCfg = Debug|x86
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug|x86.Build.0 = Debug|x86
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug-NoWindows|x86.ActiveCfg = Debug-NoWindows|x86
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Debug-NoWindows|x86.Build.0 = Debug-NoWindows|x86
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|x86.ActiveCfg = Release|x86
 		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release|x86.Build.0 = Release|x86
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release-NoWindows|x86.ActiveCfg = Release-NoWindows|x86
-		{13A28048-DAF4-4478-8CBB-C4E4B87E8957}.Release-NoWindows|x86.Build.0 = Release-NoWindows|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug|x86.ActiveCfg = Debug|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug|x86.Build.0 = Debug|x86
-		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug-NoWindows|x86.ActiveCfg = Debug-NoWindows|x86
-		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Debug-NoWindows|x86.Build.0 = Debug-NoWindows|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release|x86.ActiveCfg = Release|x86
 		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release|x86.Build.0 = Release|x86
-		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release-NoWindows|x86.ActiveCfg = Release-NoWindows|x86
-		{C91ACA5C-52A1-4433-B150-822779ACCED6}.Release-NoWindows|x86.Build.0 = Release-NoWindows|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

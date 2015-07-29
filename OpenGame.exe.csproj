@@ -109,12 +109,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="src\Launcher.cs" />
-    <Compile Include="src\CommandLineSwitches.cs" />
-    <Compile Include="src\ConsoleWindow.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\RTP.cs" />
     <Compile Include="src\Ruby.cs" />
+    <Compile Include="src\RuntimeConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

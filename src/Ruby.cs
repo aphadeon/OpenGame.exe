@@ -42,7 +42,7 @@ namespace OpenGame
 
             try
             {
-                engine.Execute(@"$RGSS_VERSION = " + Program.GetRGSSVersion(), scope);
+                engine.Execute(@"$RGSS_VERSION = " + Program.GetRuntime().GetRGSSVersion(), scope);
             }
             catch (Exception e)
             {
@@ -55,19 +55,19 @@ namespace OpenGame
             Eval(script);
 
             //Load the version appropriate RPG datatypes
-            if (Program.GetRGSSVersion() == 1)
+            if (Program.GetRuntime().GetRGSSVersion() == 1)
             {
                 script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG1);
                 script = script.Substring(1);
                 Eval(script);
             }
-            if (Program.GetRGSSVersion() == 2)
+            if (Program.GetRuntime().GetRGSSVersion() == 2)
             {
                 script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG2);
                 script = script.Substring(1);
                 Eval(script);
             }
-            if (Program.GetRGSSVersion() == 3)
+            if (Program.GetRuntime().GetRGSSVersion() == 3)
             {
                 script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG3);
                 script = script.Substring(1);
@@ -77,7 +77,12 @@ namespace OpenGame
 
         public void Start()
         {
-            Graphics.initialize(Program.GetRGSSVersion(), Program.GetRtp().GetPath(), Program.Window, Program.ResolutionWidth, Program.ResolutionHeight);
+            RuntimeConfiguration rtc = Program.GetRuntime();
+            Runtime.RGSSVersion = rtc.GetRGSSVersion();
+            Runtime.ResourcePaths = rtc.GetResourcePaths();
+            Runtime.DefaultResolutionWidth = rtc.GetDefaultResolutionWidth();
+            Runtime.DefaultResolutionHeight = rtc.GetDefaultResolutionHeight();
+            Graphics.initialize(Program.Window);
             engine.Execute(Window.ruby_helper(), scope);
             engine.Execute(CTilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);

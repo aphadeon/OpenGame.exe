@@ -12,7 +12,10 @@ namespace OpenGame
         {
             //Setup DLL resolution (so that it can see DLLs in the /System/ directory)
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveDLL);
-            Program.Main(args);
+
+            //Create the Runtime Configuration
+            RuntimeConfiguration rtc = new RuntimeConfiguration(args);
+            Program.Start(rtc);
         }
 
         //This is used to load assemblies manually, so that we can keep our output directory

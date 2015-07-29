@@ -103,39 +103,13 @@ public class Bitmap
 
     private string FindTexture(string filename)
     {
-        string file = filename + ".png";
-        if (File.Exists(file))
+        string file = Runtime.FindImageResource(filename);
+        if (file == null)
         {
-            return file;
+            Console.WriteLine("Failed to load texture: " + filename);
+            return "";
         }
-        else
-        {
-            file = filename + ".jpg";
-            if (File.Exists(file))
-            {
-                return file;
-            }
-            else
-            {
-                file = Graphics.rtp_path + filename + ".png";
-                if (File.Exists(file))
-                {
-                    return file;
-                }
-                else
-                {
-                    file = Graphics.rtp_path + filename + ".jpg";
-                    if (File.Exists(file))
-                    {
-                        return file;
-                    }
-                    else {
-                        Console.WriteLine("Failed to load texture: " + file);
-                        return "";
-                    }
-                }
-            }
-        }
+        return file;
     }
 
     internal void SyncBitmap()

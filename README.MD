@@ -16,10 +16,9 @@ supported.  Make sure you also add the dependency DLLs to the game's /System/ fo
 Features
 --------
 The engine will soon be capable of emulating vanilla RPG Maker XP, VX, and VX Ace games. In 
-addition the engine provides additional features.  There are command line switches to enable
-the console in older RPG Maker versions, as well as forcing a particular version of RGSS emulation.
+addition the engine provides additional features.
 
-*OpenGame.exe console* - will display the console window
+There are a few command-line switches to enable new functionality.
 
 *OpenGame.exe rgss1* - would force RGSS1 backend regardless of RPG Maker version.
 
@@ -27,12 +26,45 @@ the console in older RPG Maker versions, as well as forcing a particular version
 
 *OpenGame.exe rgss3* - would force RGSS3 backend regardless of RPG Maker version.
 
+**Please include the trailing slash when providing path arguments.**
+
+*OpenGame.exe -rtp /path/to/rtp/* - would override the default RTP search location
+
+*OpenGame.exe -addrtp /path/to/extra/rtp/* - would add an additional RTP search location
+
+*OpenGame.exe -game /path/to/game/folder/* - would treat the specified path as the game directory
+
+
+Play-testing features, such as the walk-through-walls and debug menus, which were activated by
+command-line switches, are now disabled in Release builds, but operational via commandline (like 
+before) in Debug builds.  The console window will always show for Debug builds, but not for Release.
 
 The rendering backend is now OpenGL - this requires a (slightly) more modern machine, but will 
 offer superior performance on compatible machines.  The specific target OpenGL version is yet to 
 be decided.
 
 More enhanced features will be added in time.
+
+
+Cross-Platform
+--------------
+OpenGame.exe officially supports Windows, Mac, and Linux.  Other platforms may be supported later.
+There are some things to know regarding running OpenGame.exe on non-Windows platforms.
+
+First, know that because of the lack of a Windows registry, RTPs are not supported by default.
+If you want to add RTP support, you will have to manually place the RTP files on your hard drive,
+and launch the game with the -rtp command line switch in order to tell the engine where to find
+them.
+
+Example: *OpenGame.exe -rtp /path/to/rtp/*
+
+The console window is not available by default for non-Windows operating systems due to technical
+limitations. (You can manually set the project configuration to be a console application for these
+targets, but this has to be done at compile time.)
+
+Finally, for obvious reasons, Win32API will not be available for your scripts on non-Windows
+operating systems.  A plugin system is planned for the future that will enable scripts to use
+libraries without being neccessarily platform-specific.
 
 
 Limitations

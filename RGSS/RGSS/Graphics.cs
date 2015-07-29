@@ -21,16 +21,12 @@ public class Graphics
     internal static List<Viewport> viewports = new List<Viewport>();
     public static Viewport default_viewport;
     public static GameWindow Window;
-    public static string rtp_path = "";
-    public static int RgssVersion = 3;
 
-    public static void initialize(int version, string rtp, GameWindow win, int resw, int resh)
+    public static void initialize(GameWindow win)
     {
-        RgssVersion = version;
-        rtp_path = rtp;
         Window = win;
-        width = resw;
-        height = resh;
+        width = Runtime.DefaultResolutionWidth;
+        height = Runtime.DefaultResolutionHeight;
         last_frame_time = DateTime.Now;
         frame_time = new TimeSpan(0, 0, 0, 0, 1000 / frame_rate);
         default_viewport = new Viewport(0, 0, width, height);

@@ -25,7 +25,10 @@ public class Font
 
         List<string> list = new List<string>();
         if (Directory.Exists(@"Fonts\")) list.AddRange(Directory.GetFiles(@"Fonts\"));
-        if(Graphics.RgssVersion > 1) list.AddRange(Directory.GetFiles(Graphics.rtp_path + @"Fonts\"));
+        foreach (string path in Runtime.ResourcePaths)
+        {
+            if (Directory.Exists(path + @"Fonts\")) list.AddRange(Directory.GetFiles(path + @"Fonts\"));
+        }
         if (list.Count > 0)
         {
             string[] found = list.ToArray();
@@ -41,12 +44,12 @@ public class Font
             }
         }
         default_name = "VL Gothic";
-        if (Graphics.RgssVersion == 1)
+        if (Runtime.RGSSVersion == 1)
         {
             default_name = "MS PGothic";
             default_size = 22;
         }
-        if (Graphics.RgssVersion == 2)
+        if (Runtime.RGSSVersion == 2)
         {
             default_name = "Verdana";
             default_size = 20;

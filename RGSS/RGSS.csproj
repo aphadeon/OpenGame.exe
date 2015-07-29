@@ -98,6 +98,7 @@
     <Compile Include="RGSS\Sprite.cs" />
     <Compile Include="RGSS\Viewport.cs" />
     <Compile Include="RGSS\Window.cs" />
+    <Compile Include="Runtime.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
