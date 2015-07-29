@@ -53,6 +53,10 @@ namespace OpenGame
                 ConsoleWindow.Show();
             #endif
 
+            #if NOWINDOWS
+                //set flags here
+            #endif
+
             Console.WriteLine("Assembly Directory: " + AssemblyDirectory);
 
             //Store the command-line switches
