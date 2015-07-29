@@ -233,7 +233,7 @@ public class Window : Drawable
                     int endY = aah - 64 - 4;
 
                     int yy; //Outside of loop so it can be used for the bottom row
-                    for ( yy = 0; yy < endY; yy += 64)
+                    for (yy = 0; yy < endY; yy += 64)
                     {
                         GL.TexCoord2(0f, 0.5f);
                         GL.Vertex3(tileX + xx, tileY + yy, 0.2f);

@@ -73,7 +73,7 @@ namespace OpenGame
                     case "-game":
                         i++; //pre-emptively increment to the accompanying parameter
                         //Set the DataPath where we will look for game files
-                        DataPath = ResolvePath( parameters[i].Replace("\"", "") );
+                        DataPath = ResolvePath(parameters[i].Replace("\"", ""));
                         break;
                     case "-rtp":
                         i++; //pre-emptively increment to the accompanying parameter
