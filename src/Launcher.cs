@@ -24,7 +24,7 @@ namespace OpenGame
         {
             Console.WriteLine("Resolving dll " + args.Name);
             string folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string assemblyPath = Path.Combine(folderPath + @"\System\", new AssemblyName(args.Name).Name + ".dll");
+            string assemblyPath = Path.Combine(folderPath + @"/System/", new AssemblyName(args.Name).Name + ".dll");
             if (File.Exists(assemblyPath) == false) return null;
             Assembly assembly = Assembly.LoadFrom(assemblyPath);
             return assembly;
