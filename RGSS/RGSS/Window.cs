@@ -188,10 +188,12 @@ public class Window : Drawable
         //windowskin
         if (windowskin != null && windowskin.txid != 0 && back_opacity > 0 && openness >= 0)
         {
+            float alpha = 1.0f; // (1.0f / 255.0f) * (float)back_opacity;
+
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, windowskin.txid);
 
-            GL.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float)back_opacity);
+            GL.Color4(1.0f, 1.0f, 1.0f, alpha);
 
             //clone position values to mod them for openness
             int mod_y = (int)(((1f / 255f) * (float) openness) * height);
@@ -202,7 +204,7 @@ public class Window : Drawable
             if (mod_y > 1)
             {
                 GL.Begin(BeginMode.Quads);
-
+                
                 //background layer 1
                 GL.TexCoord2(0f, 0f);
                 GL.Vertex3(aax + 2, aay + 2, 0.2f);
@@ -266,6 +268,60 @@ public class Window : Drawable
 
                     GL.TexCoord2(0f, endUVY);
                     GL.Vertex3(tileX + xx, tileY + yy + endY, 0.2f);
+                }
+
+                //Tint the background layers
+                if (tone.red != 0 || tone.green != 0 || tone.blue != 0)
+                {
+                    GL.End();
+
+                    GL.Disable(EnableCap.Texture2D);
+                    GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+
+                    if (tone.red > 0 || tone.green > 0 || tone.blue > 0)
+                    {
+                        float addR = (tone.red > 0 ? (float)tone.red / 255.0f * alpha : 0.0f);
+                        float addG = (tone.green > 0 ? (float)tone.green / 255.0f * alpha : 0.0f);
+                        float addB = (tone.blue > 0 ? (float)tone.blue / 255.0f * alpha : 0.0f);
+
+                        GL.Color4(addR, addG, addB, 0.0f);
+                        GL.BlendEquation(BlendEquationMode.FuncAdd);
+
+                        GL.Begin(BeginMode.Quads);
+
+                        GL.Vertex3(aax + 2, aay + 2, 0.2f);
+                        GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
+                        GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
+                        GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+
+                        GL.End();
+                    }
+
+                    if (tone.red < 0 || tone.green < 0 || tone.blue < 0)
+                    {
+                        float subR = (tone.red < 0 ? -(float)tone.red / 255.0f * alpha : 0.0f);
+                        float subG = (tone.green < 0 ? -(float)tone.green / 255.0f * alpha : 0.0f);
+                        float subB = (tone.blue < 0 ? -(float)tone.blue / 255.0f * alpha : 0.0f);
+
+                        GL.Color4(subR, subG, subB, 0.0f);
+                        GL.BlendEquation(BlendEquationMode.FuncReverseSubtract);
+
+                        GL.Begin(BeginMode.Quads);
+
+                        GL.Vertex3(aax + 2, aay + 2, 0.2f);
+                        GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
+                        GL.Vertex3(aax + aaw - 2, aay + aah - 2, 0.2f);
+                        GL.Vertex3(aax + 2, aay + aah - 2, 0.2f);
+
+                        GL.End();
+                    }
+
+                    GL.BlendEquation(BlendEquationMode.FuncAdd);
+                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                    GL.Color4(1.0f, 1.0f, 1.0f, alpha);
+                    GL.Enable(EnableCap.Texture2D);
+
+                    GL.Begin(BeginMode.Quads);
                 }
 
                 //corners
