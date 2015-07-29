@@ -48,22 +48,10 @@ namespace OpenGame
 
             // Setup command-line parameter defaults
             DataPath = GetAssemblyLocation();
-            GameTitle = ReadGameTitle();
             PlayTest = false;
             BattleTest = false;
-            RGSSVersion = ReadRGSSVersion();
+            RGSSVersion = 0;
 
-            // Set default resolution according to RGSS version
-            if (RGSSVersion == 1)
-            {
-                DefaultResolutionWidth = 640;
-                DefaultResolutionHeight = 480;
-            }
-            else
-            {
-                DefaultResolutionWidth = 544;
-                DefaultResolutionHeight = 416;
-            }
             string OverrideRtp = null;
             List<string> ExtraRtps = new List<string>();
             // Parse command-line parameters
@@ -113,6 +101,22 @@ namespace OpenGame
             ResourcePaths = new List<string>();
             // Add the game directory
             ResourcePaths.Add(DataPath);
+
+            GameTitle = ReadGameTitle();
+            if(RGSSVersion == 0) RGSSVersion = ReadRGSSVersion();
+
+            // Set default resolution according to RGSS version
+            if (RGSSVersion == 1)
+            {
+                DefaultResolutionWidth = 640;
+                DefaultResolutionHeight = 480;
+            }
+            else
+            {
+                DefaultResolutionWidth = 544;
+                DefaultResolutionHeight = 416;
+            }
+
             // Add Extra RTPs
             ResourcePaths.AddRange(ExtraRtps);
             // Add default RTP(s) last
@@ -184,7 +188,7 @@ namespace OpenGame
             string s = "";
             try
             {
-                s = File.ReadAllText("Game.ini");
+                s = File.ReadAllText(ResourcePaths[0] + "Game.ini");
             }
             catch
             {
@@ -214,7 +218,7 @@ namespace OpenGame
             string s = "";
             try
             {
-                s = File.ReadAllText("Game.ini");
+                s = File.ReadAllText(ResourcePaths[0] + "Game.ini");
             }
             catch
             {

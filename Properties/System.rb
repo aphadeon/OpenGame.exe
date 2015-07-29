@@ -4,7 +4,8 @@ load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
 require 'System\RGSS.dll'
 
-#test = Sprite.new
+# Set the cwd to the game data path
+Dir.chdir($GAME_DIRECTORY)
 
 # API compatible Thread based Fiber implementation for Ruby 1.8
 # https://gist.github.com/tmm1/4631

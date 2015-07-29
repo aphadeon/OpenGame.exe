@@ -30,6 +30,16 @@ namespace OpenGame
             engine = runtime.GetEngine("Ruby");
             scope = engine.CreateScope();
 
+            try
+            {
+                engine.Execute(@"$RGSS_VERSION = " + Program.GetRuntime().GetRGSSVersion(), scope);
+                engine.Execute(@"$GAME_DIRECTORY = '" + Program.GetRuntime().GetResourcePaths()[0].Replace(@"\", @"\\") + @"'", scope);
+            }
+            catch (Exception e)
+            {
+                Program.Error(e.Message);
+            }
+
             //Load system internals and our Ruby internals
             Console.WriteLine("Loading system");
             //engine.Execute(System.Text.Encoding.UTF8.GetString(Properties.Resources.System), scope);
@@ -39,15 +49,6 @@ namespace OpenGame
             script = System.Text.Encoding.UTF8.GetString(Properties.Resources.Loader);
             script = script.Substring(1); //fix for weird initial character
             Eval(script);
-
-            try
-            {
-                engine.Execute(@"$RGSS_VERSION = " + Program.GetRuntime().GetRGSSVersion(), scope);
-            }
-            catch (Exception e)
-            {
-                Program.Error(e.Message);
-            }
 
             //Load the adaptable RPG datatypes
             script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG);
