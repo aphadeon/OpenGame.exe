@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 public class Bitmap
 {
     public Font font;
@@ -20,27 +19,36 @@ public class Bitmap
     private bool disposed = false;
     public string name = "";
 
+    internal Action syncBitmap; //this.SyncBitmap() call
+
     public Bitmap(string filename)
     {
+        syncBitmap = this.SyncBitmap;
+
         font = Font.default_font;
         LoadTexture(filename);
     }
 
     public Bitmap(int w, int h)
     {
+        syncBitmap = this.SyncBitmap;
+
         font = Font.default_font;
         CreateTexture(w, h);
     }
 
     public Bitmap(Bitmap b)
     {
+        syncBitmap = this.SyncBitmap;
+
         font = b.font;
         name = b.name;
         width_ = b.width();
         height_ = b.height();
         bmp = (System.Drawing.Bitmap) b.bmp.Clone();
         disposed = b.disposed;
-        SyncBitmap();
+
+        Graphics.deferred_action_add(syncBitmap);
     }
 
     private void CreateTexture(int w, int h)
@@ -172,7 +180,8 @@ public class Bitmap
     public void set_pixel(int x, int y, Color rc){
         System.Drawing.Color c = System.Drawing.Color.FromArgb(rc.alpha, rc.red, rc.green, rc.blue);
         bmp.SetPixel(x, y, c);
-        SyncBitmap();
+
+        Graphics.deferred_action_add(syncBitmap);
     }
 
     public void stretch_blt(Rect dest, Bitmap src_bitmap, Rect src_rect, int opacity)
@@ -183,7 +192,8 @@ public class Bitmap
         System.Drawing.Rectangle destination = new System.Drawing.Rectangle(new Point(dest.x, dest.y), new Size(dest.width, dest.height));
         g.DrawImage(src_bitmap.bmp, destination, source, GraphicsUnit.Pixel);
         g.Dispose();
-        SyncBitmap();
+
+        Graphics.deferred_action_add(syncBitmap);
     }
 
     public void draw_text(int x, int y, int width, int height, int message)
@@ -276,7 +286,8 @@ public class Bitmap
         DrawStringShrink2Fit(g, message, f, brush, destination, stringFormat);
         g.Dispose();
         brush.Dispose();
-        SyncBitmap();
+
+        Graphics.deferred_action_add(syncBitmap);
     }
 
     public Rect text_size(string message)
@@ -306,7 +317,10 @@ public class Bitmap
         {
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
-        SyncBitmap();
+
+        
+        Graphics.deferred_action_add(syncBitmap);
+
         g.Dispose();
     }
 
@@ -323,7 +337,8 @@ public class Bitmap
         {
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
-        SyncBitmap();
+        Graphics.deferred_action_add(syncBitmap);
+
         g.Dispose();
     }
 
@@ -367,7 +382,9 @@ public class Bitmap
         {
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
-        SyncBitmap();
+
+        Graphics.deferred_action_add(syncBitmap);
+
         g.Dispose();
     }
 

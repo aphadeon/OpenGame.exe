@@ -22,8 +22,15 @@ public class Graphics
     public static Viewport default_viewport;
     public static GameWindow Window;
 
+    internal static Stack<Action> deferredActions = new Stack<Action>();
+    internal static Mutex deferredMutex = new Mutex();
+    internal static bool hasDeferredActions = false;
+    internal static int mainThreadId;
+
     public static void initialize(GameWindow win)
     {
+        mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
         Window = win;
         width = Runtime.DefaultResolutionWidth;
         height = Runtime.DefaultResolutionHeight;
@@ -39,8 +46,50 @@ public class Graphics
         viewports = viewports.OrderBy(v => v.z).ThenByDescending(v => v.created_at).ToList();
     }
 
+    //Internal method that runs all pending deferred actions
+    internal static void deferred_action_run()
+    {
+        if (hasDeferredActions)
+        {
+            deferredMutex.WaitOne();
+
+            int cc = deferredActions.Count();
+
+            Action action;
+            while (cc-- != 0)
+            {
+                action = deferredActions.Pop();
+                action();
+            }
+
+            hasDeferredActions = false;
+
+            deferredMutex.ReleaseMutex();
+        }
+    }
+
+    //Actions to happen on Graphics.update added here
+    public static void deferred_action_add(Action action)
+    {
+        if (System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId)
+        {
+            action();
+        }
+        else
+        {
+            deferredMutex.WaitOne();
+
+            deferredActions.Push(action);
+            hasDeferredActions = true;
+
+            deferredMutex.ReleaseMutex();
+        }
+    }
+
     public static void update()
     {
+        deferred_action_run(); //Run deferred actions
+
         TimeSpan span = DateTime.Now.Subtract(Graphics.last_frame_time);
         if (span < frame_time)
         {

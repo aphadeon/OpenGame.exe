@@ -277,7 +277,7 @@ namespace OpenGame
                 s = path;
             }
 
-            //Make sure the DataPath correctly ends with the OS' path delimiter
+            //Make sure the path correctly ends with the OS' path delimiter
             if (!s.EndsWith(PathDelimiter))
             {
                 s += PathDelimiter;
