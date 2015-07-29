@@ -73,13 +73,7 @@ namespace OpenGame
                     case "-game":
                         i++; //pre-emptively increment to the accompanying parameter
                         //Set the DataPath where we will look for game files
-                        DataPath = parameters[i].Replace("\"", "");
-
-                        //Make sure the DataPath correctly ends with the OS' path delimiter
-                        if (!DataPath.EndsWith(PathDelimiter))
-                        {
-                            DataPath += PathDelimiter;
-                        }
+                        DataPath = ResolvePath( parameters[i].Replace("\"", "") );
                         break;
                     case "-rtp":
                         i++; //pre-emptively increment to the accompanying parameter
@@ -266,6 +260,30 @@ namespace OpenGame
             }
 
             return title;
+        }
+
+        // Here to make sure any OS paths are correctly formatted (ending with delimiter)
+        private string ResolvePath(string path)
+        {
+            string s;
+
+            //Windows software usually supports / delimiters, so we can convert any of those to \\
+            if (WindowsOS && path.EndsWith("/"))
+            {
+                s = path.Replace("/", PathDelimiter);
+            }
+            else
+            {
+                s = path;
+            }
+
+            //Make sure the DataPath correctly ends with the OS' path delimiter
+            if (!s.EndsWith(PathDelimiter))
+            {
+                s += PathDelimiter;
+            }
+
+            return s;
         }
 
         // These tests are run once at startup to determine whether the Operating System is Windows.
