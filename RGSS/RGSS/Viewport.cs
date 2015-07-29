@@ -84,7 +84,7 @@ public class Viewport
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToBorder);
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToBorder);
         //setup the fbo
-        GL.GenFramebuffers(1, out fbo);
+        fbo = GL.GenFramebuffer();// GL.GenFramebuffers(1, out fbo);
         GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
         GL.BindTexture(TextureTarget.Texture2D, texture);
         GL.FramebufferTexture(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, texture, 0);

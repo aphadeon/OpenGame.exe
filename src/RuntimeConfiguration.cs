@@ -318,10 +318,8 @@ namespace OpenGame
 
         private string GetAssemblyLocation()
         {
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            return Path.GetDirectoryName(path) + @"\";
+            Console.WriteLine("Assembly Location: " + Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\");
+            return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"/";
         }
 
         public string[] GetResourcePaths()
