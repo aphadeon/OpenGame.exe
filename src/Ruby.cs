@@ -34,6 +34,7 @@ namespace OpenGame
             {
                 engine.Execute(@"$RGSS_VERSION = " + Program.GetRuntime().GetRGSSVersion(), scope);
                 engine.Execute(@"$GAME_DIRECTORY = '" + Program.GetRuntime().GetResourcePaths()[0].Replace(@"\", @"\\") + @"'", scope);
+                engine.Execute(@"$GAME_OS_WIN = " + Program.GetRuntime().IsWindowsOS().ToString().ToLower(), scope);
             }
             catch (Exception e)
             {
