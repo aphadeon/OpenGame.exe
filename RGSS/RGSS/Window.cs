@@ -188,12 +188,10 @@ public class Window : Drawable
         //windowskin
         if (windowskin != null && windowskin.txid != 0 && back_opacity > 0 && openness >= 0)
         {
-            float alpha = 1.0f; // (1.0f / 255.0f) * (float)back_opacity;
-
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, windowskin.txid);
 
-            GL.Color4(1.0f, 1.0f, 1.0f, alpha);
+            GL.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float)back_opacity);
 
             //clone position values to mod them for openness
             int mod_y = (int)(((1f / 255f) * (float) openness) * height);
@@ -204,7 +202,7 @@ public class Window : Drawable
             if (mod_y > 1)
             {
                 GL.Begin(BeginMode.Quads);
-                
+
                 //background layer 1
                 GL.TexCoord2(0f, 0f);
                 GL.Vertex3(aax + 2, aay + 2, 0.2f);
@@ -273,6 +271,8 @@ public class Window : Drawable
                 //Tint the background layers
                 if (tone.red != 0 || tone.green != 0 || tone.blue != 0)
                 {
+                    float alpha = (float)back_opacity / 255.0f;
+
                     GL.End();
 
                     GL.Disable(EnableCap.Texture2D);
