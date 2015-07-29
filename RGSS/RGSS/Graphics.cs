@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 public class Graphics
 {
@@ -22,8 +23,7 @@ public class Graphics
     public static Viewport default_viewport;
     public static GameWindow Window;
 
-    internal static Queue<Action> deferredActions = new Queue<Action>();
-    internal static Mutex deferredMutex = new Mutex();
+    internal static ConcurrentQueue<Action> deferredActions = new ConcurrentQueue<Action>();
     internal static bool hasDeferredActions = false;
     internal static int mainThreadId;
 
@@ -51,16 +51,13 @@ public class Graphics
     {
         if (hasDeferredActions)
         {
-            deferredMutex.WaitOne();
-
-            foreach (Action action in deferredActions)
+            Action action;
+            while (deferredActions.TryDequeue(out action))
             {
                 action();
             }
 
             hasDeferredActions = false;
-
-            deferredMutex.ReleaseMutex();
         }
     }
 
@@ -69,16 +66,12 @@ public class Graphics
     {
         if (System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId)
         {
-            action();
+            action(); //Run the action if we're already on Main thread
         }
         else
         {
-            deferredMutex.WaitOne();
-
             deferredActions.Enqueue(action);
             hasDeferredActions = true;
-
-            deferredMutex.ReleaseMutex();
         }
     }
 
