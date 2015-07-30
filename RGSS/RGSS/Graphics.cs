@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 public class Graphics
 {
@@ -22,8 +23,14 @@ public class Graphics
     public static Viewport default_viewport;
     public static GameWindow Window;
 
+    internal static ConcurrentQueue<Action> deferredActions = new ConcurrentQueue<Action>();
+    internal static bool hasDeferredActions = false;
+    internal static int mainThreadId;
+
     public static void initialize(GameWindow win)
     {
+        mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
         Window = win;
         width = Runtime.DefaultResolutionWidth;
         height = Runtime.DefaultResolutionHeight;
@@ -39,8 +46,39 @@ public class Graphics
         viewports = viewports.OrderBy(v => v.z).ThenByDescending(v => v.created_at).ToList();
     }
 
+    //Internal method that runs all pending deferred actions
+    internal static void deferred_action_run()
+    {
+        if (hasDeferredActions)
+        {
+            Action action;
+            while (deferredActions.TryDequeue(out action))
+            {
+                action();
+            }
+
+            hasDeferredActions = false;
+        }
+    }
+
+    //Actions to happen on Graphics.update added here
+    public static void deferred_action_add(Action action)
+    {
+        if (System.Threading.Thread.CurrentThread.ManagedThreadId == mainThreadId)
+        {
+            action(); //Run the action if we're already on Main thread
+        }
+        else
+        {
+            deferredActions.Enqueue(action);
+            hasDeferredActions = true;
+        }
+    }
+
     public static void update()
     {
+        deferred_action_run(); //Run deferred actions
+
         TimeSpan span = DateTime.Now.Subtract(Graphics.last_frame_time);
         if (span < frame_time)
         {

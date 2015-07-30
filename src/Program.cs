@@ -66,10 +66,10 @@ namespace OpenGame
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(0, Runtime.GetDefaultResolutionWidth(), Runtime.GetDefaultResolutionHeight(), 0, -1, 1);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            GL.Disable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Texture2D); //TODO: Only enable textures where they are needed (fixed function performance hit)
+            GL.Enable(EnableCap.Blend); //TODO: blend should only be enabled where it is needed! Needless performance hit here
+            GL.Disable(EnableCap.DepthTest); //TODO: Remove depth buffer from context if depth test is not used
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha); //TODO: move this to only where it is needed to be used
             GL.ClearColor(0f, 0f, 0f, 1.0f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Window.SwapBuffers();
