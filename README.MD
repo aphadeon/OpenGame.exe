@@ -66,8 +66,9 @@ Finally, for obvious reasons, Win32API will not be available for your scripts on
 operating systems.  A plugin system is planned for the future that will enable scripts to use
 libraries without being neccessarily platform-specific.
 
-**Important:** If you are on a Unix operating system, please set the executable bit for the file
-*/Tools/assemble.bat* as otherwise you will not get a complete product on building.
+**Important:** If you are on a Unix operating system, please set the executable bit for the files
+*/Tools/assemble-debug.bat* and *Tools/assemble-release.bat* as otherwise you will not get a 
+complete product on building.
 
 
 Limitations
