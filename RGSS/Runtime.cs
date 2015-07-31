@@ -29,16 +29,25 @@ public class Runtime
         return null;
     }
 
-    public string FindAudioResource(string name)
+    public static string FindAudioResource(string name)
     {
         string[] formats = { ".ogg", ".mid", ".midi", ".mp3", ".wav" };
+        string[] supported_formats = { ".ogg" };
         foreach (string path in ResourcePaths)
         {
             foreach (string format in formats)
             {
                 if (File.Exists(path + name + format))
                 {
-                    return path + name + format;
+                    if (!supported_formats.Contains(format))
+                    {
+                        Console.WriteLine("Unsupported audio format: " + path + name + format);
+                        return null;
+                    }
+                    else
+                    {
+                        return path + name + format;
+                    }
                 }
             }
         }

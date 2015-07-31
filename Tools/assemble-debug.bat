@@ -28,6 +28,8 @@ if not exist .\bin\Debug mkdir .\bin\Debug
 if not exist .\bin\Debug\System mkdir .\bin\Debug\System
 
 copy .\bin\RGSS\RGSS.dll .\bin\Debug\System\RGSS.dll
+copy .\lib\csogg.dll .\bin\Debug\System\csogg.dll
+copy .\lib\csvorbis.dll .\bin\Debug\System\csvorbis.dll
 copy .\lib\IronRuby.dll .\bin\Debug\System\IronRuby.dll
 copy .\lib\IronRuby.Libraries.dll .\bin\Debug\System\IronRuby.Libraries.dll
 copy .\lib\Microsoft.Dynamic.dll .\bin\Debug\System\Microsoft.Dynamic.dll

@@ -137,5 +137,14 @@ OpenGame.exe is licensed under a
 Dependency License Information:
 -------------------------------
 
-IronRuby is licensed under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0).  
-OpenTK is licensed under [The Open Toolkit library license](http://www.opentk.com/project/license).
+[IronRuby](http://ironruby.net/) 
+is licensed under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0).  
+
+[OpenTK](http://www.opentk.com/) 
+is licensed under [The Open Toolkit library license](http://www.opentk.com/project/license).
+
+[csogg](https://github.com/mono/csvorbis/tree/master/csogg)
+is licensed under [GNU LPGL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+
+[csvorbis](https://github.com/mono/csvorbis/tree/master/csvorbis)
+is licensed under [GNU LPGL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
