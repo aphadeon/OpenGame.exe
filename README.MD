@@ -1,7 +1,7 @@
 # ![logo](Tools/logo.png) OpenGame.exe
 A custom Ruby-powered game engine that supports RPG Maker games.  It aims to emulate the original 
-RPG Maker's *Game.exe* functionality as closely as possible, and to later be expanded to provide 
-new functions to empower RPG Maker games.
+RPG Maker's *Game.exe* functionality as closely as possible, and to be expanded to provide new 
+functions to empower RPG Maker games.
 
 **OpenGame.exe is currently in an Alpha phase - expect significant issues for the time being. I 
 am working as quickly as I can to get things ready for production use, but it takes time.**
@@ -11,6 +11,13 @@ Usage
 -----
 OpenGame.exe acts as a drop-in replacement for RPG Maker's Game.exe. RPG Maker XP, VX, and Ace are 
 supported.  Make sure you also add the dependency DLLs to the game's /System/ folder.
+
+There may be some a few compatibility issues.  We have done quite a bit to keep these as rare as
+possible.  But some things work differently, deliberately.  For example, the backend uses OpenGL.
+This means that bitmaps are not stored in the same place or format as the original, so DLL-powered
+scripts that modified them are going to have problems.  That said, the tradeoff is that this
+enables us to add new extensions and methods that will make such scripts easier and less hack-ish
+to implement.
 
 
 Features
@@ -25,8 +32,6 @@ There are a few command-line switches to enable new functionality.
 *OpenGame.exe rgss2* - would force RGSS2 backend regardless of RPG Maker version.
 
 *OpenGame.exe rgss3* - would force RGSS3 backend regardless of RPG Maker version.
-
-**Please include the trailing slash when providing path arguments.**
 
 *OpenGame.exe -rtp /path/to/rtp/* - would override the default RTP search location
 
@@ -67,7 +72,7 @@ operating systems.  A plugin system is planned for the future that will enable s
 libraries without being neccessarily platform-specific.
 
 **Important:** If you are on a Unix operating system, please set the executable bit for the files
-*/Tools/assemble-debug.bat* and *Tools/assemble-release.bat* as otherwise you will not get a 
+*Tools/assemble-debug.bat* and *Tools/assemble-release.bat* as otherwise you will not get a 
 complete product on building.
 
 
@@ -81,6 +86,7 @@ the distribution and playback of MP3s, and it does not offer any significant ben
 OGG/Vorbis file format. Don't believe me? 
 [See this link for MP3 licensing details.](http://mp3licensing.com/royalty/software.html)
 [There *are* patents involved](http://mp3licensing.com/patents/index.html).
+*Update: A workaround for the license issue is being investigated. No promises yet.*
 
 Secondly, encrypted RPG Maker archives will not be supported.  While the format is well known 
 at this point, Enterbrain (the copyright holder for RPG Maker) has directly expressed that it is 
@@ -94,14 +100,14 @@ Building from source
 We also use NuGet to manage dependencies- as long as you have package resolution enabled, 
 this process should run automatically and install the required libraries.
 
-A pre-build step exists, which invokes *Tools/build-deps.bat*, which copies the libraries to
-their expected location in the Debug and Release binary output folders.
+A pre-build step exists, which invokes *Tools/assemble-[debug|release]*, which copies the libraries
+to their expected location in the Debug and Release binary output folders.
 
-Basically, clone and build in Visual Studio should be all there is to it.  Mono/Xamarin Studio
-(using xbuild) support is a high priority, but will not work correctly until further development.
+Basically, clone and build in Visual Studio should be all there is to it.
 
 After building, you may drop an RPG Maker project directly in the output folder for
 simple testing, or copy the output files to your RPG Maker Project directory and run it from there.
+Or make use of the -game commandline switch to specify the game location.
 
 
 Contributing
