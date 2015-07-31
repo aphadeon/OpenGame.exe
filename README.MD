@@ -12,7 +12,7 @@ Usage
 OpenGame.exe acts as a drop-in replacement for RPG Maker's Game.exe. RPG Maker XP, VX, and Ace are 
 supported.  Make sure you also add the dependency DLLs to the game's /System/ folder.
 
-There may be some a few compatibility issues.  We have done quite a bit to keep these as rare as
+There may be a few script compatibility issues.  We have done quite a bit to keep these as rare as
 possible.  But some things work differently, deliberately.  For example, the backend uses OpenGL.
 This means that bitmaps are not stored in the same place or format as the original, so DLL-powered
 scripts that modified them are going to have problems.  That said, the tradeoff is that this
