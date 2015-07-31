@@ -66,6 +66,9 @@ Finally, for obvious reasons, Win32API will not be available for your scripts on
 operating systems.  A plugin system is planned for the future that will enable scripts to use
 libraries without being neccessarily platform-specific.
 
+**Important:** If you are on a Unix operating system, please set the executable bit for the file
+*/Tools/assemble.bat* as otherwise you will not get a complete product on building.
+
 
 Limitations
 -----------
@@ -110,10 +113,9 @@ Credits and Thanks
 Thanks to the [hbgames.org community](http://www.hbgames.org/) for helping me learn the RPG Maker 
 series over the years.  
 
-Thanks to vgvgf for demonstrating how to pack and unpack Table, Color, and Tone classes.  
+Thanks to Xilef for invaluable input that has accelerated this project significantly.
 
-Thanks to Xilef for the tip on using render-to-texture to emulate some of RPG Maker's features 
-with OpenGL.
+Thanks to vgvgf for demonstrating how to pack and unpack Table, Color, and Tone classes.  
 
 Thanks to tmm1 for the soft Fiber implementation, and for granting me permission to use it in this
 project.
