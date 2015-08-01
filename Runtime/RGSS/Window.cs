@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Window : Drawable
+public class Window : OpenGame.Runtime.Drawable
 {
     public int openness
     {

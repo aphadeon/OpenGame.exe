@@ -35,7 +35,7 @@ public class Viewport
 
     internal int texture = 0;
     internal int fbo = 0;
-    internal List<Drawable> sprites = new List<Drawable>();
+    internal List<OpenGame.Runtime.Drawable> sprites = new List<OpenGame.Runtime.Drawable>();
 
     public Viewport()
     {
@@ -124,7 +124,7 @@ public class Viewport
         }
 
         sort();
-        foreach (Drawable s in sprites)
+        foreach (OpenGame.Runtime.Drawable s in sprites)
         {
             //Console.WriteLine("drawing sprite: " + s.z);
             s.draw();

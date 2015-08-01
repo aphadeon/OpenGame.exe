@@ -1,5 +1,4 @@
-﻿using RGSS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,7 +24,7 @@ public class Font
 
         List<string> list = new List<string>();
         if (Directory.Exists(@"Fonts\")) list.AddRange(Directory.GetFiles(@"Fonts\"));
-        foreach (string path in Runtime.ResourcePaths)
+        foreach (string path in OpenGame.Runtime.Runtime.ResourcePaths)
         {
             if (Directory.Exists(path + @"Fonts\")) list.AddRange(Directory.GetFiles(path + @"Fonts\"));
         }
@@ -44,12 +43,12 @@ public class Font
             }
         }
         default_name = "VL Gothic";
-        if (Runtime.RGSSVersion == 1)
+        if (OpenGame.Runtime.Runtime.RGSSVersion == 1)
         {
             default_name = "MS PGothic";
             default_size = 22;
         }
-        if (Runtime.RGSSVersion == 2)
+        if (OpenGame.Runtime.Runtime.RGSSVersion == 2)
         {
             default_name = "Verdana";
             default_size = 20;

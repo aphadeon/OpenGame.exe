@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RGSS")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("OpenGame.Runtime")]
+[assembly: AssemblyDescription("A runtime library for OpenGame.exe")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RGSS.Properties")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("avarisc")]
+[assembly: AssemblyProduct("OpenGame.Runtime")]
+[assembly: AssemblyCopyright("Copyright © avarisc 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

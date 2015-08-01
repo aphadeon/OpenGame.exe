@@ -14,7 +14,7 @@ public struct UVRECT {
     public float y2;
 }
 
-public class CTilemap : Drawable
+public class CTilemap : OpenGame.Runtime.Drawable
 {
     private int texture = 0;
     private int fbo = 0;
@@ -690,7 +690,7 @@ public class CTilemap : Drawable
     {
         //Console.WriteLine("Loading tileset image: " + filename);
         string file = @"Graphics\Tilesets\" + filename;
-        file = Runtime.FindImageResource(file);
+        file = OpenGame.Runtime.Runtime.FindImageResource(file);
         if (file == null)
         {
             Console.WriteLine("Failed to load texture: " + filename);

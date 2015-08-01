@@ -1,6 +1,5 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using RGSS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +31,8 @@ public class Graphics
         mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
         Window = win;
-        width = Runtime.DefaultResolutionWidth;
-        height = Runtime.DefaultResolutionHeight;
+        width = OpenGame.Runtime.Runtime.DefaultResolutionWidth;
+        height = OpenGame.Runtime.Runtime.DefaultResolutionHeight;
         last_frame_time = DateTime.Now;
         frame_time = new TimeSpan(0, 0, 0, 0, 1000 / frame_rate);
         default_viewport = new Viewport(0, 0, width, height);
@@ -196,7 +195,7 @@ public class Graphics
     public static void reset()
     {
         viewports = new List<Viewport>();
-        default_viewport.sprites = new List<Drawable>();
+        default_viewport.sprites = new List<OpenGame.Runtime.Drawable>();
     }
 
     public static void freeze()

@@ -9,7 +9,6 @@ NAME=${NAME##*/}
 
 mkdir -p ./bin/Debug/System
 
-cp ./bin/RGSS/RGSS.dll ./bin/Debug/System/
 cp ./lib/IronRuby.dll ./bin/Debug/System/
 cp ./lib/IronRuby.Libraries.dll ./bin/Debug/System/
 cp ./lib/Microsoft.Dynamic.dll ./bin/Debug/System/
@@ -27,7 +26,6 @@ if not exist .\bin\ mkdir .\bin\
 if not exist .\bin\Debug mkdir .\bin\Debug
 if not exist .\bin\Debug\System mkdir .\bin\Debug\System
 
-copy .\bin\RGSS\RGSS.dll .\bin\Debug\System\RGSS.dll
 copy .\lib\csogg.dll .\bin\Debug\System\csogg.dll
 copy .\lib\csvorbis.dll .\bin\Debug\System\csvorbis.dll
 copy .\lib\IronRuby.dll .\bin\Debug\System\IronRuby.dll

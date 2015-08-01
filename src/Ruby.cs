@@ -80,11 +80,12 @@ namespace OpenGame
         public void Start()
         {
             RuntimeConfiguration rtc = Program.GetRuntime();
-            Runtime.RGSSVersion = rtc.GetRGSSVersion();
-            Runtime.ResourcePaths = rtc.GetResourcePaths();
-            Runtime.DefaultResolutionWidth = rtc.GetDefaultResolutionWidth();
-            Runtime.DefaultResolutionHeight = rtc.GetDefaultResolutionHeight();
+            OpenGame.Runtime.Runtime.RGSSVersion = rtc.GetRGSSVersion();
+            OpenGame.Runtime.Runtime.ResourcePaths = rtc.GetResourcePaths();
+            OpenGame.Runtime.Runtime.DefaultResolutionWidth = rtc.GetDefaultResolutionWidth();
+            OpenGame.Runtime.Runtime.DefaultResolutionHeight = rtc.GetDefaultResolutionHeight();
             Graphics.initialize(Program.Window);
+            engine.Execute(Input.ruby_helper(), scope);
             engine.Execute(Window.ruby_helper(), scope);
             engine.Execute(CTilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);

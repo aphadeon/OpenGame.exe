@@ -16,7 +16,7 @@ public class Audio
     public static void bgm_play(string filename, int volume = 100, int pitch = 100, int pos = 0)
     {
         if (String.IsNullOrEmpty(filename)) return;
-        string file = Runtime.FindAudioResource(filename);
+        string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
         bgm = RPGX.Audio.Audio.Play(file, /* loop */ true, (float) volume / 100f, (float) pitch / 100f);
     }
@@ -43,7 +43,7 @@ public class Audio
     public static void bgs_play(string filename, int volume = 100, int pitch = 100, int pos = 0)
     {
         if (String.IsNullOrEmpty(filename)) return;
-        string file = Runtime.FindAudioResource(filename);
+        string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
         bgs = RPGX.Audio.Audio.Play(file, /* loop */ true, (float)volume / 100f, (float)pitch / 100f);
     }
@@ -70,7 +70,7 @@ public class Audio
     public static void me_play(string filename, int volume = 100, int pitch = 100)
     {
         if (String.IsNullOrEmpty(filename)) return;
-        string file = Runtime.FindAudioResource(filename);
+        string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
         RPGX.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
     }
@@ -88,7 +88,7 @@ public class Audio
     public static void se_play(string filename, int volume = 100, int pitch = 100)
     {
         if (String.IsNullOrEmpty(filename)) return;
-        string file = Runtime.FindAudioResource(filename);
+        string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
         RPGX.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
     }

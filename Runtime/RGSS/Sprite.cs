@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Sprite : Drawable
+public class Sprite : OpenGame.Runtime.Drawable
 {
     public bool is_plane = false;
 

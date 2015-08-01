@@ -53,27 +53,6 @@
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-NoWindows|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-NoWindows\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NOWINDOWS</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-NoWindows|x86'">
-    <OutputPath>bin\Release-NoWindows\</OutputPath>
-    <DefineConstants>TRACE;NOWINDOWS</DefineConstants>
-    <Optimize>true</Optimize>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -134,9 +113,9 @@
     <None Include="Properties\System.rb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="RGSS\RGSS.csproj">
+    <ProjectReference Include="Runtime\OpenGame.Runtime.csproj">
       <Project>{C91ACA5C-52A1-4433-B150-822779ACCED6}</Project>
-      <Name>RGSS</Name>
+      <Name>OpenGame.Runtime</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

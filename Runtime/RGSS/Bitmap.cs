@@ -1,5 +1,4 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using RGSS;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -111,7 +110,7 @@ public class Bitmap
 
     private string FindTexture(string filename)
     {
-        string file = Runtime.FindImageResource(filename);
+        string file = OpenGame.Runtime.Runtime.FindImageResource(filename);
         if (file == null)
         {
             Console.WriteLine("Failed to load texture: " + filename);
