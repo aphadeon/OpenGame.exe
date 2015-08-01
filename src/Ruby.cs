@@ -85,6 +85,7 @@ namespace OpenGame
             Graphics.initialize(Program.Window);
             if(rtc.IsDebug() && rtc.IsPlayTest()) engine.Execute("$DEBUG = $TEST = true", scope);
             engine.Execute(Input.ruby_helper(), scope);
+            engine.Execute(Plane.ruby_helper(), scope);
             engine.Execute(Table.ruby_helper(), scope);
             engine.Execute(Window.ruby_helper(), scope);
             engine.Execute(Tilemap.ruby_helper(), scope);

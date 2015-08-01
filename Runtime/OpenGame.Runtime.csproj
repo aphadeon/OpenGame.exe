@@ -83,6 +83,7 @@
     <Compile Include="RGSS\Audio.cs" />
     <Compile Include="RGSS\Bitmap.cs" />
     <Compile Include="RGSS\Input.cs" />
+    <Compile Include="RGSS\Plane.cs" />
     <Compile Include="RGSS\Table.cs" />
     <Compile Include="RGSS\TilemapOLD.cs" />
     <Compile Include="RGSS\Tilemap.cs" />
