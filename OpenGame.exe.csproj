@@ -103,7 +103,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\Loader.rb" />
     <None Include="Properties\OpenGame.ico" />
     <None Include="packages.config" />
     <None Include="Properties\RPG.rb" />

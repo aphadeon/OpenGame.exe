@@ -337,6 +337,11 @@ namespace OpenGame
             return Debug;
         }
 
+        public bool IsPlayTest()
+        {
+            return PlayTest;
+        }
+
         public bool IsWindowsOS()
         {
             return WindowsOS;

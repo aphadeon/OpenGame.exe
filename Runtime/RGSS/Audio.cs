@@ -5,8 +5,8 @@ using System.Text;
 
 public class Audio
 {
-    public static RPGX.Audio.AudioSample bgm = null;
-    public static RPGX.Audio.AudioSample bgs = null;
+    public static OpenGame.Audio.AudioSample bgm = null;
+    public static OpenGame.Audio.AudioSample bgs = null;
 
     public static void setup_mdi()
     {
@@ -18,15 +18,15 @@ public class Audio
         if (String.IsNullOrEmpty(filename)) return;
         string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
-        bgm = RPGX.Audio.Audio.Play(file, /* loop */ true, (float) volume / 100f, (float) pitch / 100f);
+        bgm = OpenGame.Audio.Audio.Play(file, /* loop */ true, (float)volume / 100f, (float)pitch / 100f);
     }
 
     public static void bgm_stop()
     {
         if (bgm == null) return;
-        if (RPGX.Audio.Audio.GetAudio().soundsplaying.ContainsKey(bgm))
+        if (OpenGame.Audio.Audio.GetAudio().soundsplaying.ContainsKey(bgm))
         {
-            RPGX.Audio.Audio.GetAudio().soundsplaying[bgm].Stop();
+            OpenGame.Audio.Audio.GetAudio().soundsplaying[bgm].Stop();
         }
     }
 
@@ -45,15 +45,15 @@ public class Audio
         if (String.IsNullOrEmpty(filename)) return;
         string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
-        bgs = RPGX.Audio.Audio.Play(file, /* loop */ true, (float)volume / 100f, (float)pitch / 100f);
+        bgs = OpenGame.Audio.Audio.Play(file, /* loop */ true, (float)volume / 100f, (float)pitch / 100f);
     }
 
     public static void bgs_stop()
     {
         if (bgs == null) return;
-        if (RPGX.Audio.Audio.GetAudio().soundsplaying.ContainsKey(bgs))
+        if (OpenGame.Audio.Audio.GetAudio().soundsplaying.ContainsKey(bgs))
         {
-            RPGX.Audio.Audio.GetAudio().soundsplaying[bgs].Stop();
+            OpenGame.Audio.Audio.GetAudio().soundsplaying[bgs].Stop();
         }
     }
 
@@ -72,7 +72,7 @@ public class Audio
         if (String.IsNullOrEmpty(filename)) return;
         string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
-        RPGX.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
+        OpenGame.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
     }
 
     public static void me_stop()
@@ -90,7 +90,7 @@ public class Audio
         if (String.IsNullOrEmpty(filename)) return;
         string file = OpenGame.Runtime.Runtime.FindAudioResource(filename);
         if (file == null) return;
-        RPGX.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
+        OpenGame.Audio.Audio.Play(file, /* loop */ false, (float)volume / 100f, (float)pitch / 100f);
     }
 
     public static void se_stop()

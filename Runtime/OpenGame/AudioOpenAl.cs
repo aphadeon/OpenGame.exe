@@ -7,10 +7,8 @@ using System.Threading;
 using System.Diagnostics;
 using OpenTK;
 
-namespace RPGX.Audio
+namespace OpenGame.Audio
 {
-
-
     public class AudioOpenAl
     {
         public AudioOpenAl()

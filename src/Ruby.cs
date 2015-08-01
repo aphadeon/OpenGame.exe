@@ -47,9 +47,6 @@ namespace OpenGame
             string script = System.Text.Encoding.UTF8.GetString(Properties.Resources.System);
             script = script.Substring(1);  //fix for a weird character that shouldn't be there o.O
             Eval(script);
-            script = System.Text.Encoding.UTF8.GetString(Properties.Resources.Loader);
-            script = script.Substring(1); //fix for weird initial character
-            Eval(script);
 
             //Load the adaptable RPG datatypes
             script = System.Text.Encoding.UTF8.GetString(Properties.Resources.RPG);
@@ -84,10 +81,13 @@ namespace OpenGame
             OpenGame.Runtime.Runtime.ResourcePaths = rtc.GetResourcePaths();
             OpenGame.Runtime.Runtime.DefaultResolutionWidth = rtc.GetDefaultResolutionWidth();
             OpenGame.Runtime.Runtime.DefaultResolutionHeight = rtc.GetDefaultResolutionHeight();
+            OpenGame.Runtime.Runtime.InitializeAudio();
             Graphics.initialize(Program.Window);
+            if(rtc.IsDebug() && rtc.IsPlayTest()) engine.Execute("$DEBUG = $TEST = true", scope);
             engine.Execute(Input.ruby_helper(), scope);
+            engine.Execute(Table.ruby_helper(), scope);
             engine.Execute(Window.ruby_helper(), scope);
-            engine.Execute(CTilemap.ruby_helper(), scope);
+            engine.Execute(Tilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);
             engine.Execute(Rect.ruby_helper(), scope);
             engine.Execute(Sprite.ruby_helper(), scope);

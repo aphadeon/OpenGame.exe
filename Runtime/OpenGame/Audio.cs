@@ -8,7 +8,7 @@ using OpenTK;
 using System.IO;
 
 
-namespace RPGX.Audio
+namespace OpenGame.Audio
 {
     class Audio
     {
@@ -21,7 +21,7 @@ namespace RPGX.Audio
             return audio;
         }
 
-        private static void Setup()
+        public static void Setup()
         {
             if (audio == null)
             {

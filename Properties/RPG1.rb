@@ -509,56 +509,6 @@ end
 
 module RPG
   class Event
-    def initialize(x, y)
-      @id = 0
-      @name = ""
-      @x = x
-      @y = y
-      @pages = [RPG::Event::Page.new]
-    end
-    attr_accessor :id
-    attr_accessor :name
-    attr_accessor :x
-    attr_accessor :y
-    attr_accessor :pages
-  end
-end
-module RPG
-  class Event
-    class Page
-      def initialize
-        @condition = RPG::Event::Page::Condition.new
-        @graphic = RPG::Event::Page::Graphic.new
-        @move_type = 0
-        @move_speed = 3
-        @move_frequency = 3
-        @move_route = RPG::MoveRoute.new
-        @walk_anime = true
-        @step_anime = false
-        @direction_fix = false
-        @through = false
-        @always_on_top = false
-        @trigger = 0
-        @list = [RPG::EventCommand.new]
-      end
-      attr_accessor :condition
-      attr_accessor :graphic
-      attr_accessor :move_type
-      attr_accessor :move_speed
-      attr_accessor :move_frequency
-      attr_accessor :move_route
-      attr_accessor :walk_anime
-      attr_accessor :step_anime
-      attr_accessor :direction_fix
-      attr_accessor :through
-      attr_accessor :always_on_top
-      attr_accessor :trigger
-      attr_accessor :list
-    end
-  end
-end
-module RPG
-  class Event
     class Page
       class Condition
         def initialize

@@ -4,7 +4,7 @@ if $GAME_OS_WIN
 	load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
 end
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
-require 'System\OpenGame.Runtime.dll'
+require './System/OpenGame.Runtime.dll'
 
 # Set the cwd to the game data path
 Dir.chdir($GAME_DIRECTORY)
@@ -86,42 +86,6 @@ module Kernel
 	end
 end
 
-class Table
-  attr_reader :xsize, :ysize, :zsize
-
-  def initialize(xsize, ysize=1, zsize=1)
-    @xsize = xsize
-    @ysize = ysize
-    @zsize = zsize
-    @data  = Array.new(@xsize*@ysize*@zsize, 0)
-  end
-
-  def resize(xsize, ysize=1, zsize=1)
-  end
-
-  def [](x, y=0, z=0)
-    return nil if x >= @xsize or y >= @ysize
-    @data[x + y * @xsize + z * @xsize * @ysize]
-  end
-
-  def []= (x, y, z, v)
-    @data[x + y * @xsize + z * @xsize * @ysize]=v
-  end
-
-  def self._load(s)
-    Table.new(1).instance_eval {
-      @size, @xsize, @ysize, @zsize, xx, *@data = s.unpack('LLLLLS*')
-      self
-    }
-  end
-
-  def _dump(d = 0)
-    [@size, @xsize, @ysize, @zsize, @xsize*@ysize*@zsize, *@data].pack('LLLLLS*')
-  end
-
-end
-
-
 # Script loader
 
 def rgss_start
@@ -188,4 +152,78 @@ end
 
 def rgss_exec(script, scriptname)
 	eval(script, nil, scriptname, 0)
+end
+
+
+# Temporary
+class Rect
+  def to_a
+    [self.x, self.y, self.width, self.height]
+  end
+end
+
+class Plane
+  def initialize(v = nil)
+    @sprite = Sprite.new(v)
+    @bitmap = nil
+  end
+ 
+  def dispose
+	return if(@sprite.nil?)
+	return if(@sprite.disposed?)
+	@sprite.bitmap.dispose if(!@sprite.bitmap.nil? && !@sprite.bitmap.disposed?)
+	@sprite.dispose
+  end
+ 
+  def disposed?
+    @sprite.nil? || @sprite.disposed?
+  end
+ 
+  def ox=(val)
+    @sprite.ox = (val % (@bitmap.nil? ? 1 : @bitmap.width))
+  end
+ 
+  def oy=(val)
+    @sprite.oy = (val % (@bitmap.nil? ? 1 : @bitmap.height))
+  end
+ 
+  def bitmap
+    @bitmap
+  end
+ 
+  def bitmap=(bmp)
+    w, h = vrect.width, vrect.height
+   
+    nw = bmp.width <= 100 ? 2 : 3
+    nh = bmp.height <= 100 ? 2 : 3
+   
+    dx = [(w / bmp.width).ceil, 1].max * nw
+    dy = [(h / bmp.height).ceil, 1].max * nh
+ 
+    bw = dx * bmp.width
+    bh = dy * bmp.height
+ 
+    @bitmap = bmp
+    @sprite.bitmap.dispose unless @sprite.bitmap.nil? or @sprite.bitmap.disposed?
+    @sprite.bitmap = Bitmap.new(bw, bh)
+   
+    dx.times do |x|
+      dy.times do |y|
+        @sprite.bitmap.blt(x * bmp.width, y * bmp.height, @bitmap, @bitmap.rect)
+      end
+    end
+  end
+ 
+  def method_missing(sym, *argv, &argb)
+    if @sprite.respond_to?(sym)
+      return @sprite.send(sym, *argv, &argb)
+    end
+    super(sym, *argv, &argb)
+  end
+ 
+  private
+  def vrect
+    @sprite.viewport.nil? ? Rect.new(0, 0, Graphics.width, Graphics.height) :
+    @sprite.viewport.rect
+  end
 end

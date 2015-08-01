@@ -75,14 +75,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Audio.cs" />
-    <Compile Include="Audio\AudioOpenAl.cs" />
+    <Compile Include="OpenGame\Audio.cs" />
+    <Compile Include="OpenGame\AudioOpenAl.cs" />
     <Compile Include="OpenGame\Drawable.cs" />
-    <Compile Include="Audio\OggDecoder.cs" />
+    <Compile Include="OpenGame\OggDecoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RGSS\Audio.cs" />
     <Compile Include="RGSS\Bitmap.cs" />
     <Compile Include="RGSS\Input.cs" />
+    <Compile Include="RGSS\Table.cs" />
+    <Compile Include="RGSS\TilemapOLD.cs" />
     <Compile Include="RGSS\Tilemap.cs" />
     <Compile Include="RGSS\Tone.cs" />
     <Compile Include="RGSS\Color.cs" />

@@ -13,6 +13,11 @@ namespace OpenGame.Runtime
         public static int DefaultResolutionWidth;
         public static int DefaultResolutionHeight;
 
+        public static void InitializeAudio()
+        {
+            OpenGame.Audio.Audio.Setup();
+        }
+
         public static string FindImageResource(string name)
         {
             string[] formats = { ".jpg", ".jpeg", ".png", ".gif" };
