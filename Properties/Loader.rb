@@ -11,11 +11,10 @@ class Plane
   end
  
   def dispose
-    b1 = @sprite.nil? || @sprite.disposed?
-    b2 = b1 ? false : @sprite.bitmap.nil? || @sprite.bitmap.disposed?
-    @sprite.bitmap.dispose if b2
-    @sprite.dispose if b1
-    return nil
+	return if(@sprite.nil?)
+	return if(@sprite.disposed?)
+	@sprite.bitmap.dispose if(!@sprite.bitmap.nil? && !@sprite.bitmap.disposed?)
+	@sprite.dispose
   end
  
   def disposed?

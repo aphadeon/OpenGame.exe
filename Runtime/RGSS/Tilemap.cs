@@ -621,7 +621,6 @@ public class CTilemap : OpenGame.Runtime.Drawable
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (float)TextureMagFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (float)TextureWrapMode.ClampToEdge);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (float)TextureWrapMode.ClampToEdge);
-
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(filename);
             int width_ = bmp.Width;
             int height_ = bmp.Height;
@@ -690,6 +689,10 @@ public class CTilemap : OpenGame.Runtime.Drawable
     {
         //Console.WriteLine("Loading tileset image: " + filename);
         string file = @"Graphics\Tilesets\" + filename;
+        if (OpenGame.Runtime.Runtime.RGSSVersion == 2)
+        {
+            file = @"Graphics\System\" + filename;
+        }
         file = OpenGame.Runtime.Runtime.FindImageResource(file);
         if (file == null)
         {
@@ -722,6 +725,9 @@ class Tilemap
   attr_accessor :ox
   attr_accessor :oy
   attr_accessor :z
+  if($RGSS_VERSION == 2)
+    attr_accessor :passages
+  end
   def initialize(viewport = nil)
     @z = 0
     @ct = CTilemap.new(viewport) if (viewport)
@@ -735,11 +741,27 @@ class Tilemap
     @animated_layer = []
     @anim_count = 0
     @disposed = false
+    if($RGSS_VERSION == 2)
+        @passages = []
+    end
   end
 
   def load_tileset
-    $game_map.tileset.tileset_names.each_with_index do |name, i|
-      @ct.load_tileset(i, name)
+    if($RGSS_VERSION == 2)
+        @ct.load_tileset(0, 'TileA1')
+        @ct.load_tileset(1, 'TileA2')
+        @ct.load_tileset(2, 'TileA3')
+        @ct.load_tileset(3, 'TileA4')
+        @ct.load_tileset(4, 'TileA5')
+        @ct.load_tileset(5, 'TileB')
+        @ct.load_tileset(6, 'TileC')
+        @ct.load_tileset(7, 'TileD')
+        @ct.load_tileset(8, 'TileE')
+    end
+    if($RGSS_VERSION == 3)
+        $game_map.tileset.tileset_names.each_with_index do |name, i|
+          @ct.load_tileset(i, name)
+        end
     end
   end
     
@@ -785,8 +807,15 @@ class Tilemap
     load_tileset
     refresh
   end
-end
 
+  if($RGSS_VERSION == 2)
+    def passages=(data)
+        @passages = data
+        load_tileset
+        refresh
+    end
+  end
+end
         ";
     }
 }

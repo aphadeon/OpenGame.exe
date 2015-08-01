@@ -22,7 +22,7 @@ namespace OpenGame
         //clean by stashing the DLLs in /System/, akin to vanilla RGSS DLL location.
         public static Assembly ResolveDLL(object sender, ResolveEventArgs args)
         {
-            Console.WriteLine("Resolving dll " + args.Name);
+            //Console.WriteLine("Resolving dll " + args.Name);
             string folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string assemblyPath = Path.Combine(folderPath + @"/System/", new AssemblyName(args.Name).Name + ".dll");
             if (File.Exists(assemblyPath) == false) return null;
