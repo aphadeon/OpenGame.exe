@@ -45,8 +45,9 @@ public class Font
         default_name = "VL Gothic";
         if (OpenGame.Runtime.Runtime.RGSSVersion == 1)
         {
-            default_name = "MS PGothic";
+            default_name = "Arial";
             default_size = 22;
+            default_bold = true;
         }
         if (OpenGame.Runtime.Runtime.RGSSVersion == 2)
         {
@@ -54,6 +55,10 @@ public class Font
             default_size = 20;
         }
         default_font = new Font(default_name);
+        if (OpenGame.Runtime.Runtime.RGSSVersion == 1)
+        {
+            default_font.outline = false;
+        }
         //Console.WriteLine("Set default font to: " + default_font.name);
     }
 

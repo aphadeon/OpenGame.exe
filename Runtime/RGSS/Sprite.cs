@@ -69,6 +69,11 @@ public class Sprite : OpenGame.Runtime.Drawable
         initialize(v);
     }
 
+    public Sprite initialize()
+    {
+        return initialize(Graphics.default_viewport);
+    }
+
     public Sprite initialize(Viewport v)
     {
         created_at = DateTime.Now;

@@ -609,11 +609,11 @@ public class CTilemap : OpenGame.Runtime.Drawable
         renderTile((int)x * 32, (int)y * 32, z, 4, tileuv, true);
     }
 
-    public void load_tileset(int index, string filename){
+    public void load_tileset(int index, string filename, bool autotile = false){
         bool clearflag = false;
         if (String.IsNullOrEmpty(filename)) clearflag = true;
         if(!clearflag){
-            filename = FindTexture(filename);
+            filename = FindTexture(filename, autotile);
             int gid = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, gid);
 
@@ -685,13 +685,17 @@ public class CTilemap : OpenGame.Runtime.Drawable
         }
     }
 
-    private string FindTexture(string filename)
+    private string FindTexture(string filename, bool autotile)
     {
         //Console.WriteLine("Loading tileset image: " + filename);
         string file = @"Graphics\Tilesets\" + filename;
         if (OpenGame.Runtime.Runtime.RGSSVersion == 2)
         {
             file = @"Graphics\System\" + filename;
+        }
+        if (OpenGame.Runtime.Runtime.RGSSVersion == 1 && autotile)
+        {
+            file = @"Graphics\Autotiles\" + filename;
         }
         file = OpenGame.Runtime.Runtime.FindImageResource(file);
         if (file == null)
@@ -725,6 +729,11 @@ class Tilemap
   attr_accessor :ox
   attr_accessor :oy
   attr_accessor :z
+  if($RGSS_VERSION == 1)
+    attr_accessor :tileset
+    attr_accessor :autotiles
+    attr_accessor :priorities
+  end
   if($RGSS_VERSION == 2)
     attr_accessor :passages
   end
@@ -741,12 +750,27 @@ class Tilemap
     @animated_layer = []
     @anim_count = 0
     @disposed = false
+    if($RGSS_VERSION == 1)
+        @tileset = nil
+        @autotiles = []
+        @priorities = []
+    end
     if($RGSS_VERSION == 2)
         @passages = []
     end
   end
 
   def load_tileset
+    if($RGSS_VERSION == 1)
+      @ct.load_tileset(0, $game_map.tileset_name)
+      @ct.load_tileset(1, $game_map.autotile_names[0], true) if($game_map.autotile_names[0])
+      @ct.load_tileset(2, $game_map.autotile_names[1], true) if($game_map.autotile_names[1])
+      @ct.load_tileset(3, $game_map.autotile_names[2], true) if($game_map.autotile_names[2])
+      @ct.load_tileset(4, $game_map.autotile_names[3], true) if($game_map.autotile_names[3])
+      @ct.load_tileset(5, $game_map.autotile_names[4], true) if($game_map.autotile_names[4])
+      @ct.load_tileset(6, $game_map.autotile_names[5], true) if($game_map.autotile_names[5])
+      @ct.load_tileset(7, $game_map.autotile_names[6], true) if($game_map.autotile_names[6])
+    end
     if($RGSS_VERSION == 2)
         @ct.load_tileset(0, 'TileA1')
         @ct.load_tileset(1, 'TileA2')
@@ -799,6 +823,7 @@ class Tilemap
   def map_data=(data)
     return if @map_data == data
     @map_data = data
+    load_tileset if $RGSS_VERSION == 1
     refresh
   end
   

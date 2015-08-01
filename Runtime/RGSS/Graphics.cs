@@ -10,7 +10,7 @@ using System.Collections.Concurrent;
 
 public class Graphics
 {
-    public static int frame_rate = 60;
+    public static int frame_rate = OpenGame.Runtime.Runtime.RGSSVersion == 1 ? 40 : 60;
     public static int frame_count = 0;
     public static int brightness = 255;
     public static int width = 0;
