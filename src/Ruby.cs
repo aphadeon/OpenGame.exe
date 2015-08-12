@@ -105,7 +105,7 @@ namespace OpenGame
             }
             catch (Exception e)
             {
-                Program.Error(e.Message);
+				Program.Error(e.Message);
             }
         }
 
@@ -119,7 +119,7 @@ namespace OpenGame
             }
             catch (Exception e)
             {
-                Program.Error(e.Message);
+				Program.Error(e.Message);
             }
         }
 

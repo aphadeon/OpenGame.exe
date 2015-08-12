@@ -13,7 +13,7 @@ cp ./lib/IronRuby.dll ./bin/Debug/System/
 cp ./lib/IronRuby.Libraries.dll ./bin/Debug/System/
 cp ./lib/Microsoft.Dynamic.dll ./bin/Debug/System/
 cp ./lib/Microsoft.Scripting.dll ./bin/Debug/System/
-cp ./packages/OpenTK.1.1.1589.5942/lib/NET40/OpenTK.dll ./bin/Debug/System/
+cp ./lib/OpenTK.dll ./bin/Debug/System/
 cp ./Tools/OpenGame.exe.config ./bin/Debug/
 
 exit
@@ -32,4 +32,4 @@ copy .\lib\IronRuby.dll .\bin\Debug\System\IronRuby.dll
 copy .\lib\IronRuby.Libraries.dll .\bin\Debug\System\IronRuby.Libraries.dll
 copy .\lib\Microsoft.Dynamic.dll .\bin\Debug\System\Microsoft.Dynamic.dll
 copy .\lib\Microsoft.Scripting.dll .\bin\Debug\System\Microsoft.Scripting.dll
-copy .\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll .\bin\Debug\System\OpenTK.dll
+copy .\lib\OpenTK.dll .\bin\Debug\System\OpenTK.dll

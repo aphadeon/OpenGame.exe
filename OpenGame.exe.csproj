@@ -15,6 +15,8 @@
     <UseMSBuildEngine>False</UseMSBuildEngine>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>OpenGame.Launcher</StartupObject>
@@ -34,7 +36,7 @@
     <Optimize>false</Optimize>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeBuild" command="Tools\assemble-debug.bat" workingdir="${SolutionDir}" />
+        <Command type="BeforeBuild" command="bash Tools/assemble-debug.bat" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -49,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeBuild" command="Tools\assemble-release.bat" workingdir="${SolutionDir}" />
+        <Command type="BeforeBuild" command="bash Tools/assemble-release.bat" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -79,8 +81,8 @@
       <HintPath>lib\Microsoft.Scripting.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
-      <HintPath>packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK">
+      <HintPath>lib\OpenTK.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -101,15 +103,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\System.rb" />
+    <EmbeddedResource Include="Properties\RPG3.rb" />
+    <EmbeddedResource Include="Properties\RPG2.rb" />
+    <EmbeddedResource Include="Properties\RPG1.rb" />
+    <EmbeddedResource Include="Properties\RPG.rb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OpenGame.ico" />
     <None Include="packages.config" />
-    <None Include="Properties\RPG.rb" />
-    <None Include="Properties\RPG1.rb" />
-    <None Include="Properties\RPG2.rb" />
-    <None Include="Properties\RPG3.rb" />
-    <None Include="Properties\System.rb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Runtime\OpenGame.Runtime.csproj">

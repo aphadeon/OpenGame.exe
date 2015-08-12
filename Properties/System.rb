@@ -1,8 +1,6 @@
 ﻿# Load required builtins for RGSS
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Zlib'
-if $GAME_OS_WIN
-	load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
-end
+load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Win32API'
 load_assembly 'IronRuby.Libraries', 'IronRuby.StandardLibrary.Threading'
 require './System/OpenGame.Runtime.dll'
 
