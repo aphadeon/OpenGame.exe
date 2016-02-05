@@ -15,3 +15,4 @@ have not signed this file cannot be accepted. You may include your email address
 
 Jason B. (avarisc)    
 Felix J. (Xilef)
+Mattias C. (mattiascibien)
