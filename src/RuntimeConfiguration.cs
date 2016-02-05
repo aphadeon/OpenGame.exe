@@ -20,7 +20,6 @@ namespace OpenGame
         private int DefaultResolutionWidth;
         private int DefaultResolutionHeight;
         private List<String> ResourcePaths;
-        private string PathDelimiter;
 
         public RuntimeConfiguration(string[] parameters)
         {
@@ -35,8 +34,6 @@ namespace OpenGame
             
             if (WindowsOS)
             {
-                PathDelimiter = "\\";
-
                 // Enable the console if applicable
                 if (Debug)
                 {
@@ -50,10 +47,6 @@ namespace OpenGame
                         ShowWindow(handle, SW_SHOW);
                     }
                 }                
-            }
-            else
-            {
-                PathDelimiter = "/";
             }
 
             // Setup command-line parameter defaults
@@ -270,7 +263,7 @@ namespace OpenGame
             //Windows software usually supports / delimiters, so we can convert any of those to \\
             if (WindowsOS && path.EndsWith("/"))
             {
-                s = path.Replace("/", PathDelimiter);
+                s = path.Replace('/', Path.DirectorySeparatorChar);
             }
             else
             {
@@ -278,9 +271,9 @@ namespace OpenGame
             }
 
             //Make sure the path correctly ends with the OS' path delimiter
-            if (!s.EndsWith(PathDelimiter))
+            if (!s.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
-                s += PathDelimiter;
+                s += Path.DirectorySeparatorChar;
             }
 
             return s;
