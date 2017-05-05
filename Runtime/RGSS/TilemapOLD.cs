@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
@@ -33,9 +33,22 @@ public class CTilemap : OpenGame.Runtime.Drawable
         get { return vp; }
         set
         {
-            if (vp != null) vp.sprites.Remove(this);
-            vp = value;
-            vp.sprites.Add(this);
+            if(vp != null)
+            {
+                if (vp.sprites.Contains(this)) vp.sprites.Remove(this);
+            } else
+            {
+                if (OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
+            }
+            if(value == null)
+            {
+                vp = value;
+                OG_Graphics.drawables.Add(this);
+            } else
+            {
+                vp = value;
+                vp.add_sprite(this);
+            }
         }
     }
     public short[] mapData;
@@ -98,22 +111,29 @@ public class CTilemap : OpenGame.Runtime.Drawable
 
     public CTilemap()
     {
-        initialize(Graphics.default_viewport);
+        initialize(null);
     }
     public CTilemap(Viewport v)
     {
         initialize(v);
     }
 
-    private void initialize(Viewport v)
+    private CTilemap initialize(Viewport v)
     {
         created_at = DateTime.Now;
         viewport = v;
         z = 0;
-        width = v.rect.width;
-        height = v.rect.height;
-        v.sprites.Add(this);
+        if (v != null)
+        {
+            width = v.rect.width;
+            height = v.rect.height;
+        } else
+        {
+            width = OG_Graphics.width;
+            height = OG_Graphics.height;
+        }
         rebuild();
+        return this;
     }
 
     public void dispose()
@@ -285,7 +305,8 @@ public class CTilemap : OpenGame.Runtime.Drawable
         }
     }
 
-    public override void draw(){
+    internal override void draw()
+    {
         //Console.WriteLine("Drawing tilemap at viewport " + viewport.z + " at z " + z);
         //draw like sprite
         GL.Enable(EnableCap.Texture2D);
@@ -293,7 +314,7 @@ public class CTilemap : OpenGame.Runtime.Drawable
 
         GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 
-        GL.Begin(BeginMode.Quads);
+        GL.Begin(PrimitiveType.Quads);
 
 
         int aw = width;
@@ -432,7 +453,7 @@ public class CTilemap : OpenGame.Runtime.Drawable
         //process the uv rect from pixels to uv
         UVRECT tileuv = convertUV(uv_rect, tilesetid, tilesetWidth, tilesetHeight);
         GL.Enable(EnableCap.Texture2D);
-        GL.Begin(BeginMode.Polygon);
+        GL.Begin(PrimitiveType.Polygon);
             GL.TexCoord2 (tileuv.x1, tileuv.y2);
             GL.Vertex3(drawx, drawy + drawh, z);       // bottom left
             GL.TexCoord2 (tileuv.x1, tileuv.y1);
@@ -845,4 +866,3 @@ end
         ";
     }
 }
-*/

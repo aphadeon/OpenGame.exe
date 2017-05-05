@@ -10,7 +10,7 @@ public class Font
     public static Font default_font;
     private static System.Drawing.Text.PrivateFontCollection private_fonts;
 
-    public static string default_name;
+    public static string def_name;
     public static float default_size = 24;
     public static bool default_bold = false;
     public static bool default_italic = false;
@@ -42,19 +42,19 @@ public class Font
                 }
             }
         }
-        default_name = "VL Gothic";
+        def_name = "VL Gothic";
         if (OpenGame.Runtime.Runtime.RGSSVersion == 1)
         {
-            default_name = "Arial";
+            def_name = "Arial";
             default_size = 22;
             default_bold = true;
         }
         if (OpenGame.Runtime.Runtime.RGSSVersion == 2)
         {
-            default_name = "Verdana";
+            def_name = "Verdana";
             default_size = 20;
         }
-        default_font = new Font(default_name);
+        default_font = new Font(def_name);
         if (OpenGame.Runtime.Runtime.RGSSVersion == 1)
         {
             default_font.outline = false;
@@ -74,7 +74,7 @@ public class Font
 
     public Font()
     {
-        initialize(default_name, default_size);
+        initialize(def_name, default_size);
     }
 
     public Font(string name){
@@ -124,7 +124,7 @@ public class Font
             {
                 ff = new System.Drawing.FontFamily(name, private_fonts);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 ff = new System.Drawing.FontFamily(name);
             }
@@ -151,6 +151,16 @@ public class Font
     {
         return @"
             class Font
+                def self.default_name
+                    def_name
+                end
+                def self.default_name= val
+                    if(val.kind_of?(Array))
+                        def_name = val[0]
+                    else
+                        def_name = val
+                    end
+                end
                 def exist?(arg_name)
                     return exists(arg_name)
                 end

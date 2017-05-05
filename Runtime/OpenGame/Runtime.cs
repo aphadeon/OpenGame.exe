@@ -13,23 +13,33 @@ namespace OpenGame.Runtime
         public static int DefaultResolutionWidth;
         public static int DefaultResolutionHeight;
 
-        public static void InitializeAudio()
-        {
-            OpenGame.Audio.Audio.Setup();
-        }
-
         public static string FindImageResource(string name)
         {
+            //test if the filename already has an extension
+            bool hasExtension = false;
+            if (name.EndsWith(".jpg") || name.EndsWith(".jpeg") || name.EndsWith(".png") || name.EndsWith(".gif")) hasExtension = true;
             string[] formats = { ".jpg", ".jpeg", ".png", ".gif" };
             foreach (string path in ResourcePaths)
             {
-                foreach (string format in formats)
+                if (hasExtension)
                 {
                     //Console.WriteLine("Searching for: " + path + name + format);
-                    if (File.Exists(path + name + format))
+                    if (File.Exists(path + name))
                     {
                         //Console.WriteLine("Found: " + path + name + format);
-                        return path + name + format;
+                        return path + name;
+                    }
+                }
+                else
+                {
+                    foreach (string format in formats)
+                    {
+                        //Console.WriteLine("Searching for: " + path + name + format);
+                        if (File.Exists(path + name + format))
+                        {
+                            //Console.WriteLine("Found: " + path + name + format);
+                            return path + name + format;
+                        }
                     }
                 }
             }

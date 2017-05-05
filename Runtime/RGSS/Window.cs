@@ -17,8 +17,8 @@ public class Window : OpenGame.Runtime.Drawable
     public int x = -1;
     public int y = -1;
 
-    public int tw = Graphics.width;
-    public int th = Graphics.height;
+    public int tw = OG_Graphics.width;
+    public int th = OG_Graphics.height;
     public int width
     {
         get { return tw; }
@@ -82,9 +82,11 @@ public class Window : OpenGame.Runtime.Drawable
         get { return vp; }
         set
         {
-            if (vp != null) vp.sprites.Remove(this);
+            if (vp != null && vp.sprites.Contains(this)) vp.sprites.Remove(this);
+            if (vp == null && OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
             vp = value;
-            vp.sprites.Add(this);
+            if (vp != null) vp.add_sprite(this);
+            else OG_Graphics.drawables.Add(this);
         }
     }
 
@@ -92,9 +94,8 @@ public class Window : OpenGame.Runtime.Drawable
     {
         created_at = DateTime.Now;
         z = 100;
-        move(0, 0, Graphics.width, Graphics.height);
-        viewport = Graphics.default_viewport;
-        viewport.sprites.Add(this);
+        move(0, 0, OG_Graphics.width, OG_Graphics.height);
+        viewport = null;
     }
 
     public Window(int ax, int ay, int aw, int ah)
@@ -102,8 +103,7 @@ public class Window : OpenGame.Runtime.Drawable
         created_at = DateTime.Now;
         z = 100;
         move(ax, ay, aw, ah);
-        viewport = Graphics.default_viewport;
-        viewport.sprites.Add(this);
+        viewport = null;
     }
 
     //inheritance constructor
@@ -111,17 +111,15 @@ public class Window : OpenGame.Runtime.Drawable
     {
         created_at = DateTime.Now;
         z = 100;
-        move(0, 0, Graphics.width, Graphics.height);
-        viewport = Graphics.default_viewport;
-        viewport.sprites.Add(this);
+        move(0, 0, OG_Graphics.width, OG_Graphics.height);
+        viewport = null;
     }
     public void initialize(int ax, int ay, int aw, int ah)
     {
         created_at = DateTime.Now;
         z = 100;
         move(ax, ay, aw, ah);
-        viewport = Graphics.default_viewport;
-        viewport.sprites.Add(this);
+        viewport = null;
     }
 
     public void update()
@@ -158,7 +156,13 @@ public class Window : OpenGame.Runtime.Drawable
 
     public void dispose()
     {
-        viewport.sprites.Remove(this);
+        if(viewport != null) {
+            if (viewport.sprites.Contains(this)) viewport.sprites.Remove(this);
+        } else
+        {
+            if (OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
+        }
+        
         disposed = true;
     }
 
@@ -177,7 +181,7 @@ public class Window : OpenGame.Runtime.Drawable
         return (openness <= 0);
     }
 
-    public override void draw()
+    internal override void draw()
     {
         //Console.WriteLine("Drawing window at viewport " + viewport.z + " at z " + z);
         //correct openness
@@ -205,7 +209,7 @@ public class Window : OpenGame.Runtime.Drawable
 
                     GL.Color4(1.0f, 1.0f, 1.0f, bgAlpha);
 
-                    GL.Begin(BeginMode.Quads);
+                    GL.Begin(PrimitiveType.Quads);
 
                     //background layer 1
                     GL.TexCoord2(0f, 0f);
@@ -221,7 +225,7 @@ public class Window : OpenGame.Runtime.Drawable
 
                     GL.BlendFuncSeparate(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha, BlendingFactorSrc.Zero, BlendingFactorDest.One);
 
-                    GL.Begin(BeginMode.Quads);
+                    GL.Begin(PrimitiveType.Quads);
 
                     //background layer 2 - Drawn top to bottom, left to right
                     int tileX = aax + 2;
@@ -295,7 +299,7 @@ public class Window : OpenGame.Runtime.Drawable
                             GL.Color4(addR, addG, addB, 0.0f);
                             GL.BlendEquation(BlendEquationMode.FuncAdd);
 
-                            GL.Begin(BeginMode.Quads);
+                            GL.Begin(PrimitiveType.Quads);
 
                             GL.Vertex3(aax + 2, aay + 2, 0.2f);
                             GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
@@ -314,7 +318,7 @@ public class Window : OpenGame.Runtime.Drawable
                             GL.Color4(subR, subG, subB, 0.0f);
                             GL.BlendEquation(BlendEquationMode.FuncReverseSubtract);
 
-                            GL.Begin(BeginMode.Quads);
+                            GL.Begin(PrimitiveType.Quads);
 
                             GL.Vertex3(aax + 2, aay + 2, 0.2f);
                             GL.Vertex3(aax + aaw - 2, aay + 2, 0.2f);
@@ -335,7 +339,7 @@ public class Window : OpenGame.Runtime.Drawable
                 //corners
                 GL.Color4(1.0f, 1.0f, 1.0f, 1f);
 
-                GL.Begin(BeginMode.Quads);
+                GL.Begin(PrimitiveType.Quads);
 
                 //topleft corner
                 float uvtile = 0.125f; // 1f / 8f
@@ -430,7 +434,7 @@ public class Window : OpenGame.Runtime.Drawable
 
             GL.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float) contents_opacity);
 
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
             GL.TexCoord2(0f, 0f);
             GL.Vertex3(x - ox + padding, y - oy + padding, 0.15f);
@@ -445,7 +449,7 @@ public class Window : OpenGame.Runtime.Drawable
             //cursor
             GL.Color4(1.0f, 1.0f, 1.0f, cursor_opacity);
             GL.BindTexture(TextureTarget.Texture2D, windowskin.txid);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0.5f, 0.5f);
             GL.Vertex3(x + cursor_rect.x + padding, y + cursor_rect.y + padding, 0.15f);
             GL.TexCoord2(0.75f, 0.5f);

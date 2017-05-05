@@ -28,6 +28,13 @@ public class Table
         zsize = d;
         data = new int[xsize * ysize * zsize];
     }
+    
+    public Table clone()
+    {
+        Table t = new Table(xsize, ysize, zsize);
+        data.CopyTo(t.data, 0);
+        return t;
+    }
 
     public void resize(int new_xsize, int new_ysize, int new_zsize)
     {
@@ -37,7 +44,7 @@ public class Table
     public int get(int x, int y, int z)
     {
         if (x < 0 || y < 0 || z < 0) return 0;
-        if(x > xsize || y > ysize || z > zsize) return 0;
+        if(x >= xsize || y >= ysize || z >= zsize) return 0;
         return data[x + y * xsize + z * xsize * ysize];
     }
 

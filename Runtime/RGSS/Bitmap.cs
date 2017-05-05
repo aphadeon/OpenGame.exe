@@ -47,7 +47,7 @@ public class Bitmap
         bmp = (System.Drawing.Bitmap) b.bmp.Clone();
         disposed = b.disposed;
 
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
     }
 
     private void CreateTexture(int w, int h)
@@ -95,9 +95,19 @@ public class Bitmap
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (float)TextureWrapMode.ClampToEdge);
         GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (float)TextureWrapMode.ClampToEdge);
 
-        bmp = new System.Drawing.Bitmap(filename);
-        width_ = bmp.Width;
-        height_ = bmp.Height;
+        try
+        {
+            bmp = new System.Drawing.Bitmap(filename);
+            width_ = bmp.Width;
+            height_ = bmp.Height;
+        } catch (Exception e)
+        {
+            Console.WriteLine("Could not load bitmap: " + filename);
+            Console.WriteLine(e.Message);
+            bmp = new System.Drawing.Bitmap(1, 1);
+            width_ = 1;
+            height_ = 1;
+        }
         BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
         GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
@@ -180,7 +190,7 @@ public class Bitmap
         System.Drawing.Color c = System.Drawing.Color.FromArgb(rc.alpha, rc.red, rc.green, rc.blue);
         bmp.SetPixel(x, y, c);
 
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
     }
 
     public void stretch_blt(Rect dest, Bitmap src_bitmap, Rect src_rect, int opacity)
@@ -192,7 +202,7 @@ public class Bitmap
         g.DrawImage(src_bitmap.bmp, destination, source, GraphicsUnit.Pixel);
         g.Dispose();
 
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
     }
 
     public void draw_text(int x, int y, int width, int height, int message)
@@ -286,7 +296,7 @@ public class Bitmap
         g.Dispose();
         brush.Dispose();
 
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
     }
 
     public Rect text_size(string message)
@@ -317,7 +327,7 @@ public class Bitmap
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
         
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
 
         g.Dispose();
     }
@@ -335,7 +345,7 @@ public class Bitmap
         {
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
 
         g.Dispose();
     }
@@ -381,7 +391,7 @@ public class Bitmap
             g.FillRectangle(br, new Rectangle(ax, ay, aw, ah));
         }
 
-        Graphics.deferred_action_add(syncBitmap);
+        OG_Graphics.deferred_action_add(syncBitmap);
 
         g.Dispose();
     }

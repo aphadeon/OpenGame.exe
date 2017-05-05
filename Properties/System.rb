@@ -89,9 +89,7 @@ end
 # Script loader
 
 def rgss_start
-	filePath = 'Data/Scripts.rxdata' if $RGSS_VERSION == 1
-	filePath = 'Data/Scripts.rvdata' if $RGSS_VERSION == 2
-	filePath = 'Data/Scripts.rvdata2' if $RGSS_VERSION == 3
+	filePath = $RGSS_SCRIPTS_PATH
     $RGSS_SCRIPTS = []
     unknownScript = 0
    
@@ -99,11 +97,12 @@ def rgss_start
 	begin
 		script = File.new(filePath, 'r')
 	rescue StandardError => error
-		p "IO failed: " + $!
+		p "Script file IO failed: " + $!
 	end
 
     # Gets the array of scripts
-    rawData = Marshal.load(script)
+	rawData = Marshal.load(script)
+	
 
     # inflate each script
     rawData.each do |dataArray|

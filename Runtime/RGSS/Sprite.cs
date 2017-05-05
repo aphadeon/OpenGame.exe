@@ -15,9 +15,23 @@ public class Sprite : OpenGame.Runtime.Drawable
         get { return vp; }
         set
         {
-            if (vp != null) vp.sprites.Remove(this);
-            vp = value;
-            vp.sprites.Add(this);
+            if(vp == null) //if we were in global
+            {
+                //remove the sprite from the global drawables if applicable
+                if(OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
+                vp = value;
+            } else //we were in a viewport
+            {
+                if(vp.sprites.Contains(this)) vp.sprites.Remove(this);
+                vp = value;
+            } 
+            if(vp != null)
+            {
+                vp.add_sprite(this);
+            } else
+            {
+                OG_Graphics.drawables.Add(this);
+            }
         }
     }
     private bool disposed = false;
@@ -61,7 +75,7 @@ public class Sprite : OpenGame.Runtime.Drawable
 
     public Sprite()
     {
-        initialize(Graphics.default_viewport);
+        initialize(null);
     }
 
     public Sprite(Viewport v)
@@ -71,18 +85,17 @@ public class Sprite : OpenGame.Runtime.Drawable
 
     public Sprite initialize()
     {
-        return initialize(Graphics.default_viewport);
+        return initialize(null);
     }
 
     public Sprite initialize(Viewport v)
     {
         created_at = DateTime.Now;
-        viewport = v;
-        viewport.sprites.Add(this);
+        viewport = v; //should magically do what's needed
         return this;
     }
 
-    public override void draw()
+    internal override void draw()
     {
         if (!visible || disposed || opacity == 0) return;
         if (bmp == null) return;
@@ -92,15 +105,15 @@ public class Sprite : OpenGame.Runtime.Drawable
         GL.Enable(EnableCap.Texture2D);
         GL.BindTexture(TextureTarget.Texture2D, bitmap.txid);
 
-        GL.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float)opacity);
+        OpenTK.Graphics.Color4 c_val = new OpenTK.Graphics.Color4(1.0f, 1.0f, 1.0f, (1f / 255f) * (float)opacity);
+        GL.Color4(c_val);
 
         //determine pixel size in texels
         float texel_x = 1f / (float)bitmap.width();
         float texel_y = 1f / (float)bitmap.height();
         float depth_z = is_plane ? 1f : 0.9f;
 
-        GL.Begin(BeginMode.Quads);
-
+        GL.Begin(PrimitiveType.Quads);
         GL.TexCoord2(texel_x * src_rect.x, texel_y * src_rect.y);
         GL.Vertex3(x - ox, y - oy, depth_z);
         GL.TexCoord2(texel_x * (src_rect.width + src_rect.x), texel_y * src_rect.y);
@@ -109,14 +122,18 @@ public class Sprite : OpenGame.Runtime.Drawable
         GL.Vertex3(x - ox + src_rect.width, y - oy + src_rect.height, depth_z);
         GL.TexCoord2(texel_x * src_rect.x, texel_y * (src_rect.height + src_rect.y));
         GL.Vertex3(x - ox, y - oy + src_rect.height, depth_z);
-
         GL.End();
-
     }
 
     public void dispose()
     {
-        viewport.sprites.Remove(this);
+        if(viewport != null)
+        {
+            if (viewport.sprites.Contains(this)) viewport.sprites.Remove(this);
+        } else
+        {
+            if (OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
+        }
         disposed = true;
     }
 

@@ -81,14 +81,14 @@ namespace OpenGame
             OpenGame.Runtime.Runtime.ResourcePaths = rtc.GetResourcePaths();
             OpenGame.Runtime.Runtime.DefaultResolutionWidth = rtc.GetDefaultResolutionWidth();
             OpenGame.Runtime.Runtime.DefaultResolutionHeight = rtc.GetDefaultResolutionHeight();
-            OpenGame.Runtime.Runtime.InitializeAudio();
-            Graphics.initialize(Program.Window);
+            OG_Graphics.initialize(Program.Window);
             if(rtc.IsDebug() && rtc.IsPlayTest()) engine.Execute("$DEBUG = $TEST = true", scope);
-            engine.Execute(Input.ruby_helper(), scope);
+            engine.Execute(OG_Graphics.ruby_helper(), scope);
+            engine.Execute(OG_Input.ruby_helper(), scope);
             engine.Execute(Plane.ruby_helper(), scope);
             engine.Execute(Table.ruby_helper(), scope);
             engine.Execute(Window.ruby_helper(), scope);
-            engine.Execute(Tilemap.ruby_helper(), scope);
+            engine.Execute(CTilemap.ruby_helper(), scope);
             engine.Execute(Viewport.ruby_helper(), scope);
             engine.Execute(Rect.ruby_helper(), scope);
             engine.Execute(Sprite.ruby_helper(), scope);
@@ -98,9 +98,10 @@ namespace OpenGame
             Font.load_fonts();
             engine.Execute(Font.ruby_helper(), scope);
 
-
             try
             {
+                engine.Execute(@"$OPENGAME_EXE = true");
+                engine.Execute("$RGSS_SCRIPTS_PATH = '" + rtc.GetScriptsPath() + "'");
                 engine.Execute(@"rgss_start", scope);
             }
             catch (Exception e)

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Input
+public class OG_Input
 {
-    private static int[] KeyCounters = new int[19];
+
+    private static int[] KeyCounters = new int[22];
     private static int RepeatTimeInFrames = 10;
 
     public static void update_internal()
     {
-        if (!Graphics.Window.IsExiting) Graphics.Window.ProcessEvents();
+        if (!OG_Graphics.Window.IsExiting) OG_Graphics.Window.ProcessEvents();
 
-        OpenTK.Input.KeyboardDevice kb = Graphics.Window.Keyboard;
+        OpenTK.Input.KeyboardDevice kb = OG_Graphics.Window.Keyboard;
         KeyCounters[0] = (kb[OpenTK.Input.Key.S] || kb[OpenTK.Input.Key.Down]) ? KeyCounters[0] + 1 : 0;
         KeyCounters[1] = (kb[OpenTK.Input.Key.A] || kb[OpenTK.Input.Key.Left]) ? KeyCounters[1] + 1 : 0;
         KeyCounters[2] = (kb[OpenTK.Input.Key.D] || kb[OpenTK.Input.Key.Right]) ? KeyCounters[2] + 1 : 0;
@@ -32,6 +33,9 @@ public class Input
         KeyCounters[16] = (kb[OpenTK.Input.Key.F9]) ? KeyCounters[16] + 1 : 0;
         KeyCounters[17] = (kb[OpenTK.Input.Key.F2]) ? KeyCounters[17] + 1 : 0;
         KeyCounters[18] = (kb[OpenTK.Input.Key.F12]) ? KeyCounters[18] + 1 : 0;
+        KeyCounters[19] = (kb[OpenTK.Input.Key.B]) ? KeyCounters[19] + 1 : 0;
+        KeyCounters[20] = (kb[OpenTK.Input.Key.S]) ? KeyCounters[20] + 1 : 0;
+        KeyCounters[21] = (kb[OpenTK.Input.Key.D]) ? KeyCounters[21] + 1 : 0;
     }
 
     public static bool is_pressed(int code)
@@ -53,26 +57,72 @@ public class Input
     {
         //IronRuby.Builtins.RubySymbol s = new IronRuby.Builtins.RubySymbol();
         return @"
-            class Input
-	            DOWN = 0
-	            LEFT = 1
-	            RIGHT = 2
-	            UP = 3
-	            A = 4
-	            B = 5
-	            C = 6
-	            L = 7
-	            R = 8
-	            SHIFT = 9
-	            CTRL = 10
-	            ALT = 11
-	            F5 = 12
-	            F6 = 13
-	            F7 = 14
-	            F8 = 15
-	            F9 = 16
+            module Input
+                class << self
+	                Input::DOWN = 0
+	                Input::LEFT = 1
+	                Input::RIGHT = 2
+	                Input::UP = 3
+	                Input::A = 4
+	                Input::B = 5
+	                Input::C = 6
+	                Input::L = 7
+	                Input::R = 8
+	                Input::SHIFT = 9
+	                Input::CTRL = 10
+	                Input::ALT = 11
+	                Input::F5 = 12
+	                Input::F6 = 13
+	                Input::F7 = 14
+	                Input::F8 = 15
+	                Input::F9 = 16
+                    Input::X = 19
+                    Input::Y = 20
+                    Input::Z = 21
 
-	            def Input.get_code_from_symbol(sym)
+                    def update
+                        OG_Input.update
+                    end
+                    def press?(sym)
+                        OG_Input.press?(sym)
+                    end
+                    def trigger?(sym)
+                        OG_Input.trigger?(sym)
+                    end
+                    def repeat?(sym)
+                        OG_Input.repeat?(sym)
+                    end
+                    def dir4
+                        OG_Input.dir4
+                    end
+                    def dir8
+                        OG_Input.dir8
+                    end
+                end
+            end
+            class OG_Input
+	            OG_Input::DOWN = 0
+	            OG_Input::LEFT = 1
+	            OG_Input::RIGHT = 2
+	            OG_Input::UP = 3
+	            OG_Input::A = 4
+	            OG_Input::B = 5
+	            OG_Input::C = 6
+	            OG_Input::L = 7
+	            OG_Input::R = 8
+	            OG_Input::SHIFT = 9
+	            OG_Input::CTRL = 10
+	            OG_Input::ALT = 11
+	            OG_Input::F5 = 12
+	            OG_Input::F6 = 13
+	            OG_Input::F7 = 14
+	            OG_Input::F8 = 15
+	            OG_Input::F9 = 16
+                OG_Input::X = 19
+                OG_Input::Y = 20
+                OG_Input::Z = 21
+
+	            def OG_Input.get_code_from_symbol(sym)
 		            case sym
 		            when :DOWN then return 0
 		            when :LEFT then return 1
@@ -91,16 +141,19 @@ public class Input
 		            when :F7 then return 14
 		            when :F8 then return 15
 		            when :F9 then return 16
+                    when :X then return 19
+                    when :Y then return 20
+                    when :Z then return 21
 		            end
 	            end
-	            def Input.update
+	            def OG_Input.update
 		            update_internal()
 		            if(is_pressed(18))
-			            Graphics.reset
+			            OG_Graphics.reset
 			            raise RGSSReset
 		            end
 	            end
-                def Input.press?(sym)
+                def OG_Input.press?(sym)
 	              case sym
 		            when Symbol
 		              return is_pressed(get_code_from_symbol(sym))
@@ -108,7 +161,7 @@ public class Input
 		              return is_pressed(sym)
 	               end
                 end
-                def Input.trigger?(sym)
+                def OG_Input.trigger?(sym)
 	                case sym
 		            when Symbol
 		              return is_triggered(get_code_from_symbol(sym))
@@ -116,7 +169,7 @@ public class Input
 		              return is_triggered(sym)
 	               end
                 end
-                def Input.repeat?(sym)
+                def OG_Input.repeat?(sym)
 		            case sym
 		            when Symbol
 		              return is_repeat(get_code_from_symbol(sym))
@@ -124,14 +177,14 @@ public class Input
 		              return is_repeat(sym)
 	               end
                 end
-                def Input.dir4
+                def OG_Input.dir4
 		            return 4 if(press?(:LEFT))
 		            return 6 if(press?(:RIGHT))
 		            return 8 if(press?(:UP))
 		            return 2 if(press?(:DOWN))
 		            return 0
                 end
-                def Input.dir8
+                def OG_Input.dir8
 		            return 1 if(press?(:LEFT) && press?(:DOWN))
 		            return 3 if(press?(:RIGHT) && press?(:DOWN))
 		            return 7 if(press?(:LEFT) && press?(:UP))

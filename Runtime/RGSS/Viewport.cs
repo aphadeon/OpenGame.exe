@@ -6,17 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Viewport
+public class Viewport : OpenGame.Runtime.Drawable
 {
     public bool visible = true;
     private bool disposed = false;
-    public int z = 0;
     public int ox = 0;
     public int oy = 0;
     public Tone tone = new Tone();
     public Color color = new Color();
-    public DateTime created_at;
-    internal bool is_default = false;
+    //internal bool is_default = false;
 
     private int x, y, width, height;
 
@@ -39,11 +37,16 @@ public class Viewport
 
     public Viewport()
     {
-        initialize(0, 0, Graphics.width, Graphics.height);
+        initialize(0, 0, OG_Graphics.width, OG_Graphics.height);
     }
     public Viewport(int ax, int ay, int aw, int ah)
     {
         initialize(ax, ay, aw, ah);
+    }
+
+    public Viewport(Rect r)
+    {
+        initialize(r.x, r.y, r.width, r.height);
     }
 
     private void initialize(int ax, int ay, int aw, int ah)
@@ -53,13 +56,18 @@ public class Viewport
         y = ay;
         width = aw;
         height = ah;
-        Graphics.viewports.Add(this);
+        OG_Graphics.drawables.Add(this);
         rebuild();
     }
 
     public void sort()
     {
         sprites = sprites.OrderBy(s => s.z).ThenBy(s => s.created_at).ToList();
+    }
+
+    public void add_sprite(OpenGame.Runtime.Drawable s)
+    {
+        if (!sprites.Contains(s)) sprites.Add(s);
     }
 
     private void rebuild()
@@ -93,11 +101,11 @@ public class Viewport
 
     public void dispose()
     {
-        Graphics.viewports.Remove(this);
+        OG_Graphics.drawables.Remove(this);
         disposed = true;
     }
 
-    internal void draw()
+    internal override void draw()
     {
         if (!visible || disposed || fbo == 0 || texture == 0) return;
         if (sprites.Count <= 0)
@@ -124,6 +132,7 @@ public class Viewport
         }
 
         sort();
+
         foreach (OpenGame.Runtime.Drawable s in sprites)
         {
             //Console.WriteLine("drawing sprite: " + s.z);
@@ -131,26 +140,29 @@ public class Viewport
         }
 
         GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-        GL.Viewport(0, 0, Graphics.width, Graphics.height);
+        GL.Viewport(0, 0, OG_Graphics.width, OG_Graphics.height);
         GL.MatrixMode(MatrixMode.Projection);
         GL.LoadIdentity();
-        GL.Ortho(0, Graphics.width, Graphics.height, 0, -1, 1);
+        GL.Ortho(0, OG_Graphics.width, OG_Graphics.height, 0, -1, 1);
 
         GL.Enable(EnableCap.Texture2D);
         GL.BindTexture(TextureTarget.Texture2D, texture);
 
         GL.Color3(1.0f, 1.0f, 1.0f);
 
-        GL.Begin(BeginMode.Quads);
+        //render the rendertexture to the screen
+        int screen_offset_x = 0;
+        int screen_offset_y = 0;
+        GL.Begin(PrimitiveType.Quads);
 
         GL.TexCoord2(0f, 0f);
-        GL.Vertex3(x, y, 0.5f);
+        GL.Vertex3(x + screen_offset_x, y + screen_offset_y, 0.5f);
         GL.TexCoord2(1f, 0f);
-        GL.Vertex3(x + width, y, 0.5f);
+        GL.Vertex3(x + width + screen_offset_x, y + screen_offset_y, 0.5f);
         GL.TexCoord2(1f, 1f);
-        GL.Vertex3(x + width, y + height, 0.5f);
+        GL.Vertex3(x + width + screen_offset_x, y + height + screen_offset_y, 0.5f);
         GL.TexCoord2(0f, 1f);
-        GL.Vertex3(x, y + height, 0.5f);
+        GL.Vertex3(x + screen_offset_x, y + height + screen_offset_y, 0.5f);
 
         GL.End();
 

@@ -15,6 +15,7 @@ namespace OpenGame
         private bool PlayTest;
         private bool BattleTest;
         private string DataPath;
+        private string ScriptsPath;
         private string GameTitle;
         private int RGSSVersion;
         private int DefaultResolutionWidth;
@@ -131,6 +132,9 @@ namespace OpenGame
             {
                 FindRTPs();
             }
+
+            // Set scripts file path
+            ScriptsPath = ReadScriptsPath(RGSSVersion);
         }
 
         private void FindRTPs()
@@ -213,6 +217,48 @@ namespace OpenGame
             }
             if (i < 1 || i > 3) Program.Error("Unsupported RGSS version");
             return i;
+        }
+
+        // Reads Game.ini to retrieve the scripts path
+        private string ReadScriptsPath(int RGSSVersion)
+        {
+            string s = "";
+            try
+            {
+                s = File.ReadAllText(ResourcePaths[0] + "Game.ini");
+            }
+            catch
+            {
+                Program.Error("Could not load Game.ini");
+            }
+
+            string scriptPath = "";
+            int i, r, n; //Start index, index of \r, index of \n
+            try
+            {
+                i = s.IndexOf("Scripts=") + "Scripts=".Length;
+
+                r = s.IndexOf('\u000D', i); //Search for \r
+                n = s.IndexOf('\u000A', i); //Search for \n
+
+                //Length of the sub-string is up to the next occurance of \r or \n after i
+                scriptPath = s.Substring(i, (r < n ? r : n) - i);
+            }
+            catch
+            {
+                
+                switch (RGSSVersion)
+                {
+                    case 0:
+                        Program.Error("Could not retrieve Scripts path from Game.ini");
+                        scriptPath = @"Data/Scripts.rxdata"; //default to RMXP
+                        break;
+                    case 1: scriptPath = @"Data/Scripts.rxdata"; break;
+                    case 2: scriptPath = @"Data/Scripts.rvdata"; break;
+                    case 3: scriptPath = @"Data/Scripts.rvdata2"; break;
+                }
+            }
+            return scriptPath.Replace('\\', '/');
         }
 
         // Reads Game.ini to retrieve the game title
@@ -323,6 +369,11 @@ namespace OpenGame
         public int GetRGSSVersion()
         {
             return RGSSVersion;
+        }
+
+        public string GetScriptsPath()
+        {
+            return ScriptsPath;
         }
 
         public bool IsDebug()

@@ -9,7 +9,7 @@ namespace OpenGame.Runtime
     public class Drawable
     {
         public DateTime created_at;
-        public virtual void draw() { }
+        internal virtual void draw() { }
         public int z = 0;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,15 +26,25 @@ public class Tilemap
     //our stuff
     private List<TilemapLayer> layers = new List<TilemapLayer>();
 
-    public Tilemap(Viewport v = null){
-        initialize(v);
+    public Tilemap()
+    {
+        setup(null);
+    }
+
+    public Tilemap(Viewport v){
+        setup(v);
     }
 
     public Tilemap initialize(Viewport v = null)
     {
-        viewport = v == null ? Graphics.default_viewport : v;
-        create_layers();
+        setup(v);
         return this;
+    }
+
+    internal void setup(Viewport v)
+    {
+        viewport = v;
+        create_layers();
     }
 
     private void create_layers()
@@ -82,27 +93,38 @@ public class Tilemap
 
     private class TilemapLayer : OpenGame.Runtime.Drawable {
 
-        public DateTime created_at;
         public Tilemap parent;
-        public int z = 0;
 
         public TilemapLayer(Tilemap parent, int z)
         {
             this.parent = parent;
             this.z = z;
             created_at = DateTime.Now;
-            parent.viewport.sprites.Add(this);
+            if (parent.viewport != null)
+            {
+                parent.viewport.add_sprite(this);
+            } else
+            {
+                OG_Graphics.drawables.Add(this);
+            }
         }
 
-        public virtual void draw()
+        internal override void draw()
         {
             if (!parent.visible || parent.disposed) return;
         }
 
         public void dispose()
         {
-            parent.viewport.sprites.Remove(this);
+            if(parent.viewport != null)
+            {
+                if (parent.viewport.sprites.Contains(this)) parent.viewport.sprites.Remove(this);
+            } else
+            {
+                if (OG_Graphics.drawables.Contains(this)) OG_Graphics.drawables.Remove(this);
+            }
         }
     }
 
 }
+*/

@@ -148,3 +148,6 @@ is licensed under [GNU LGPL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0
 
 [csvorbis](https://github.com/mono/csvorbis/tree/master/csvorbis)
 is licensed under [GNU LGPL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+
+[NAudio](https://github.com/naudio/NAudio)
+is licensed under [Ms-PL](https://raw.githubusercontent.com/naudio/NAudio/master/license.txt)
