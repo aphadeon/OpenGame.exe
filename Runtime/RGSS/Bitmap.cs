@@ -236,16 +236,16 @@ public class Bitmap
     {
         //sizes text vertically to fit
         SizeF size = g.MeasureString(value, font, (int)rect.Width);
-        if ((size.Height <= rect.Height) || font.Size <= 1)
+        if (((size.Height) <= rect.Height) || font.Size <= 1)
         {// fit?
-            font = new System.Drawing.Font(font.FontFamily, font.Size + 3);
+            font = new System.Drawing.Font(font.FontFamily, font.Size < 20 ? font.Size + 3 : font.Size, GraphicsUnit.Pixel);
             g.DrawString(value, font, brush, rect, format); // then draw!
             font.Dispose();
         } 
         else
-        {                                                           // otherwise shrink font
+        {   // otherwise shrink font
             float shrinkFactor = (float)Math.Sqrt(rect.Height / size.Height);
-            using (System.Drawing.Font smallerFont = new System.Drawing.Font(font.FontFamily, (float)Math.Min(font.Size - 1, font.Size * shrinkFactor)))
+            using (System.Drawing.Font smallerFont = new System.Drawing.Font(font.FontFamily, (float)Math.Min(font.Size - 1, font.Size * shrinkFactor), GraphicsUnit.Pixel))
                 DrawStringShrink2Fit(g, value, smallerFont, brush, rect, format);      // and call function recursively
         }
     }

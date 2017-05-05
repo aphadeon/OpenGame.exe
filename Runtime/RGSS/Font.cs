@@ -134,7 +134,7 @@ public class Font
             if (bold && italic && ff.IsStyleAvailable(System.Drawing.FontStyle.Bold) && ff.IsStyleAvailable(System.Drawing.FontStyle.Italic)) style = System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic;
 
             if (internal_font != null) internal_font.Dispose();
-            internal_font = new System.Drawing.Font(ff, size - 10, style, System.Drawing.GraphicsUnit.Pixel);
+            internal_font = new System.Drawing.Font(ff, size - 11, style, System.Drawing.GraphicsUnit.Pixel);
         }
         return internal_font;
     }
@@ -143,7 +143,7 @@ public class Font
     {
         if (internal_font == null) return true;
         if (internal_font.FontFamily.GetName(0) != name) return true;
-        if (internal_font.Size != size - 10) return true;
+        if (internal_font.Size != size - 11) return true;
         return false;
     }
 
