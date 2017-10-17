@@ -131,6 +131,9 @@ project.
 License
 -------
 OpenGame.exe is licensed under a 
+[Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/).  
+The "Testbed" directory is exempted from this license, included for convenience. Any game content could be
+considered public domain, while binaries are the intellectual property of their respective owners.
 
 
 Dependency License Information:
